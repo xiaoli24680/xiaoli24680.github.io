@@ -9,8 +9,7 @@
 
     <!--Description-->
     
-        <meta name="description" content="title: CTF逆向基础date: 2018-12-03 22:29:24
-tags:前言之前我开始学习信息安全的时候就是从CTF学起的。密码、隐写、web、逆向、pwn都多多少少做过一些。逆向的入门是我在参加吉林省首届大学生网络安全大赛赛前培训时学习的。当时给我培训的是安恒的一位逆向大佬（给大">
+        <meta name="description" content="前言之前我开始学习信息安全的时候就是从CTF学起的。密码、隐写、web、逆向、pwn都多多少少做过一些。逆向的入门是我在参加吉林省首届大学生网络安全大赛赛前培训时学习的。当时给我培训的是安恒的一位逆向大佬（给大佬递水），在培训的时候我真是听得一脸懵逼，后期培训完我有我自己学习了一段时间，才算真正了解">
     
 
     <!--Author-->
@@ -20,7 +19,7 @@ tags:前言之前我开始学习信息安全的时候就是从CTF学起的。密
 
     <!-- Title -->
     
-    <title>xiaoli24680&#39;s Blog</title>
+    <title>CTF逆向基础 | xiaoli24680&#39;s Blog</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -57,7 +56,7 @@ tags:前言之前我开始学习信息安全的时候就是从CTF学起的。密
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>Halo</h1>
+                    <h1>CTF逆向基础</h1>
                 </div>
             </div>
         </div>
@@ -70,12 +69,11 @@ tags:前言之前我开始学习信息安全的时候就是从CTF学起的。密
         <div class="row">
             <!-- Post Main Content -->
             <div class="post-content col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <hr>
-<p>title: CTF逆向基础<br>date: 2018-12-03 22:29:24</p>
-<h2 id="tags"><a href="#tags" class="headerlink" title="tags:"></a>tags:</h2><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>之前我开始学习信息安全的时候就是从CTF学起的。密码、隐写、web、逆向、pwn都多多少少做过一些。<br>逆向的入门是我在参加吉林省首届大学生网络安全大赛赛前培训时学习的。当时给我培训的是安恒的一位逆向大佬（给大佬递水），在培训的时候我真是听得一脸懵逼，后期培训完我有我自己学习了一段时间，才算真正了解一点逆向，并重新记录在博客中，留作纪念。</p>
+                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>之前我开始学习信息安全的时候就是从CTF学起的。密码、隐写、web、逆向、pwn都多多少少做过一些。<br>逆向的入门是我在参加吉林省首届大学生网络安全大赛赛前培训时学习的。当时给我培训的是安恒的一位逆向大佬（给大佬递水），在培训的时候我真是听得一脸懵逼，后期培训完我有我自己学习了一段时间，才算真正了解一点逆向，并重新记录在博客中，留作纪念。</p>
 <h1 id="ctf逆向基础"><a href="#ctf逆向基础" class="headerlink" title="ctf逆向基础"></a>ctf逆向基础</h1><p><img src="/tupian/1.png" alt="逆向题">  </p>
 <p>这是bugkuCTF中的一道题，把这道题下载并解压，在本地中打开<br><img src="/tupian/2.png" alt="逆向题">  </p>
-<p>打开OD，将re1.exe拖入。右键选择中文搜索引擎—&gt;选择“搜索ASCII”<br><img src="/tupian/3.png" alt="逆向题"> </p>
+<p>打开OD，将re1.exe拖入。右键选择中文搜索引擎—&gt;选择“搜索ASCII”<br><img src="/tupian/3.png" alt="逆向题"><br>可以看到flag get，双击进入<br><img src="/tupian/4.png" alt="逆向题"><br>可以看到jnz指令，这是判断是否是正确的标志，再此下一个断点。如果它跳转会跳转到下面，显示flag不太对，不跳转就会显示出flag get。找到此断点后向上查找。<br><img src="/tupian/5.png" alt="逆向题"><br>从程序的输入位置之后，就是一个验证过程，在此下第二个断点。</p>
+<p>运行测试，任意输入一个值，回车运行，显示断在下图这个地方。<br><img src="/tupian/6.png" alt="逆向题"><br>F8单步调试，在寄存器窗口显示出flag。<br><img src="/tupian/7.png" alt="逆向题">  </p>
 
  
                 <!-- Meta -->

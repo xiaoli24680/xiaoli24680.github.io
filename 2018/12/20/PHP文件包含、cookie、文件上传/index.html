@@ -3,97 +3,35 @@
 <p>两者之间的区别在于：</p>
 <p><strong>include</strong>生成一个警告，在错误发生后依然会执行。</p>
 <p><strong>require</strong>生成一个致命错误，在错误发生时就会停止执行。</p>
-<pre><code>include &#39;head.php&#39;;  include会在PHP文件开始运行的时候包含
-
-require &#39;tail.php&#39;;  require会在PHP文件运行到require关键字时包含
-</code></pre><p>include_once和require_once表示只包含一次</p>
-<pre><code>include_once &#39;head.php&#39;;
-
-require_once &#39;tail.php&#39;;
-</code></pre><h2 id="二、cookie和session"><a href="#二、cookie和session" class="headerlink" title="二、cookie和session"></a>二、cookie和session</h2><h3 id="2-1cookie"><a href="#2-1cookie" class="headerlink" title="2.1cookie"></a>2.1cookie</h3><p><strong>cookie</strong> 常用于识别用户。cookie 是一种服务器留在用户计算机上的小文件。每当同一台计算机通过浏览器请求页面时，这台计算机将会发送 cookie。通过 PHP，您能够创建并取回 cookie 的值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">include &apos;head.php&apos;;  include会在PHP文件开始运行的时候包含</span><br><span class="line"></span><br><span class="line">require &apos;tail.php&apos;;  require会在PHP文件运行到require关键字时包含</span><br></pre></td></tr></table></figure>
+<p>include_once和require_once表示只包含一次</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">include_once &apos;head.php&apos;;</span><br><span class="line"></span><br><span class="line">require_once &apos;tail.php&apos;;</span><br></pre></td></tr></table></figure>
+<h2 id="二、cookie和session"><a href="#二、cookie和session" class="headerlink" title="二、cookie和session"></a>二、cookie和session</h2><h3 id="2-1cookie"><a href="#2-1cookie" class="headerlink" title="2.1cookie"></a>2.1cookie</h3><p><strong>cookie</strong> 常用于识别用户。cookie 是一种服务器留在用户计算机上的小文件。每当同一台计算机通过浏览器请求页面时，这台计算机将会发送 cookie。通过 PHP，您能够创建并取回 cookie 的值。</p>
 <p><strong>setcookie()</strong>函数用来设置cookie </p>
 <p>注意：setcookie()函数必须位于<code>&lt;html&gt;</code>标签之前。</p>
 <p>创建一个名为 “user” 的 cookie，并为它赋值 “runoob”。并规定了此 cookie 在一小时后过期： </p>
-<pre><code>&lt;?php
-setcookie(&quot;user&quot;, &quot;runoob&quot;, time()+3600);
-?&gt;
-</code></pre><h3 id="2-1-1取回cookie值"><a href="#2-1-1取回cookie值" class="headerlink" title="2.1.1取回cookie值"></a>2.1.1取回cookie值</h3><p><strong>$_COOKIE</strong> 变量用于取回 cookie 的值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">setcookie(&quot;user&quot;, &quot;runoob&quot;, time()+3600);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2-1-1取回cookie值"><a href="#2-1-1取回cookie值" class="headerlink" title="2.1.1取回cookie值"></a>2.1.1取回cookie值</h3><p><strong>$_COOKIE</strong> 变量用于取回 cookie 的值。</p>
 <p> 取回名为 “user” 的 cookie 的值，并把它显示在了页面上：</p>
-<pre><code>&lt;?php
-// 输出 cookie 值
-echo $_COOKIE[&quot;user&quot;];
-
-// 查看所有 cookie
-print_r($_COOKIE);
-?&gt;
-</code></pre><h3 id="2-1-2删除cookie"><a href="#2-1-2删除cookie" class="headerlink" title="2.1.2删除cookie"></a>2.1.2删除cookie</h3><p>删除cookie很简单，只要将日期改为过去的时间点。</p>
-<pre><code>&lt;?php
-// 设置 cookie 过期时间为过去 1 小时
-setcookie(&quot;user&quot;, &quot;&quot;, time()-3600);
-?&gt;
-</code></pre><h3 id="2-2session"><a href="#2-2session" class="headerlink" title="2.2session"></a>2.2session</h3><p><strong>Session</strong> 变量用于存储关于用户会话（session）的信息，或者更改用户会话（session）的设置。Session 变量存储单一用户的信息，并且对于应用程序中的所有页面都是可用的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">// 输出 cookie 值</span><br><span class="line">echo $_COOKIE[&quot;user&quot;];</span><br><span class="line"></span><br><span class="line">// 查看所有 cookie</span><br><span class="line">print_r($_COOKIE);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2-1-2删除cookie"><a href="#2-1-2删除cookie" class="headerlink" title="2.1.2删除cookie"></a>2.1.2删除cookie</h3><p>删除cookie很简单，只要将日期改为过去的时间点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">// 设置 cookie 过期时间为过去 1 小时</span><br><span class="line">setcookie(&quot;user&quot;, &quot;&quot;, time()-3600);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2-2session"><a href="#2-2session" class="headerlink" title="2.2session"></a>2.2session</h3><p><strong>Session</strong> 变量用于存储关于用户会话（session）的信息，或者更改用户会话（session）的设置。Session 变量存储单一用户的信息，并且对于应用程序中的所有页面都是可用的。</p>
 <p> 在把用户信息存储到 PHP session 中之前，首先必须启动会话。</p>
 <p>注意：session_start() 函数必须位于<code>&lt;html&gt;</code> 标签之前：</p>
-<pre><code>&lt;?php session_start(); ?&gt;
-&lt;html&gt;
-&lt;head&gt;&lt;/head&gt;
-&lt;body&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><h3 id="2-2-1存储session"><a href="#2-2-1存储session" class="headerlink" title="2.2.1存储session"></a>2.2.1存储session</h3><p>存储和取回 session 变量的方法是使用 PHP $_SESSION 变量： </p>
-<pre><code>&lt;?php
-session_start();
-// 存储 session 数据
-$_SESSION[&#39;views&#39;]=1;
-?&gt;
-
-&lt;?php
-// 检索 session 数据
-echo &quot;检索&quot;. $_SESSION[&#39;views&#39;];
-?&gt;
-</code></pre><h3 id="2-2-2删除session"><a href="#2-2-2删除session" class="headerlink" title="2.2.2删除session"></a>2.2.2删除session</h3><p>删除session数据，可以使用 session_destroy() 函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php session_start(); ?&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-1存储session"><a href="#2-2-1存储session" class="headerlink" title="2.2.1存储session"></a>2.2.1存储session</h3><p>存储和取回 session 变量的方法是使用 PHP $_SESSION 变量： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">session_start();</span><br><span class="line">// 存储 session 数据</span><br><span class="line">$_SESSION[&apos;views&apos;]=1;</span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">// 检索 session 数据</span><br><span class="line">echo &quot;检索&quot;. $_SESSION[&apos;views&apos;];</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-2删除session"><a href="#2-2-2删除session" class="headerlink" title="2.2.2删除session"></a>2.2.2删除session</h3><p>删除session数据，可以使用 session_destroy() 函数。</p>
 <p>session_destroy() 函数是彻底销毁 session </p>
-<pre><code>&lt;?php
-session_destroy();
-?&gt;
-</code></pre><h2 id="三、文件上传"><a href="#三、文件上传" class="headerlink" title="三、文件上传"></a>三、文件上传</h2><p>PHP可以把文件上传到服务器中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">session_destroy();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="三、文件上传"><a href="#三、文件上传" class="headerlink" title="三、文件上传"></a>三、文件上传</h2><p>PHP可以把文件上传到服务器中。</p>
 <p>文件上传的HTML表单，代码会在查看页面时出现上传界面</p>
-<pre><code>&lt;from&gt;
-&lt;input type=&quot;file&quot; name=&quot;file&quot;&gt;
-  &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;
-&lt;/from&gt;
-</code></pre><p>在PHP中可以写上传文件的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;from&gt;</span><br><span class="line">&lt;input type=&quot;file&quot; name=&quot;file&quot;&gt;</span><br><span class="line">  &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;</span><br><span class="line">&lt;/from&gt;</span><br></pre></td></tr></table></figure>
+<p>在PHP中可以写上传文件的代码</p>
 <p>在这里限制了只能上传jpg和png格式的文件如果上传的文件与规定上传的文件格式不匹配，是不允许上传的。</p>
 <p>在上传后，文件将会存储在用户指定的文件夹</p>
-<pre><code>&lt;?php
-$ext_arr = array(&#39;jpg&#39;, &#39;png&#39;);
- if (isset($_FILES[&#39;file&#39;])){
-     if ($_FILES[&#39;file&#39;] [&#39;error&#39;] == 0 ){
-         if (in_array($filename, $ext_arr) === false) {
-             echo &quot;上传文件扩展名是不允许的扩展名。&quot;;
-         }else {
-
-             $ok = move_uploaded_file($_FILES[&#39;file&#39;] [&#39;tmp_name&#39;], &#39;./picture/&#39; . $_FILES[&#39;file&#39;] [&#39;name&#39;]);
-             if ($ok) {
-                 echo &#39;文件保存在: ./picture/&#39; . $_FILES[&#39;file&#39;] [&#39;tmp_name&#39;];
-             } else {
-                 echo &#39;文件上传失败&#39;;
-             }
-         }
-?&gt;
-</code></pre><p>在文件夹中的存储方式是：</p>
-<pre><code>&lt;?php
-if ($_FILES[&quot;file&quot;][&quot;error&quot;] &gt; 0)
-{
-    echo &quot;错误：&quot; . $_FILES[&quot;file&quot;][&quot;error&quot;] . &quot;&lt;br&gt;&quot;;
-}
-else
-{
-    echo &quot;上传文件名: &quot; . $_FILES[&quot;file&quot;][&quot;name&quot;] . &quot;&lt;br&gt;&quot;;
-    echo &quot;文件类型: &quot; . $_FILES[&quot;file&quot;][&quot;type&quot;] . &quot;&lt;br&gt;&quot;;
-    echo &quot;文件大小: &quot; . ($_FILES[&quot;file&quot;][&quot;size&quot;] / 1024) . &quot; kB&lt;br&gt;&quot;;
-    echo &quot;文件临时存储的位置: &quot; . $_FILES[&quot;file&quot;][&quot;tmp_name&quot;];
-}
-?&gt;
-</code></pre></div></header></article><div class="comments" id="lv-container" data-id="city" data-uid="your uid"><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2016-2018 xiaoli24680</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$ext_arr = array(&apos;jpg&apos;, &apos;png&apos;);</span><br><span class="line"> if (isset($_FILES[&apos;file&apos;]))&#123;</span><br><span class="line">     if ($_FILES[&apos;file&apos;] [&apos;error&apos;] == 0 )&#123;</span><br><span class="line">         if (in_array($filename, $ext_arr) === false) &#123;</span><br><span class="line">             echo &quot;上传文件扩展名是不允许的扩展名。&quot;;</span><br><span class="line">         &#125;else &#123;</span><br><span class="line"></span><br><span class="line">             $ok = move_uploaded_file($_FILES[&apos;file&apos;] [&apos;tmp_name&apos;], &apos;./picture/&apos; . $_FILES[&apos;file&apos;] [&apos;name&apos;]);</span><br><span class="line">             if ($ok) &#123;</span><br><span class="line">                 echo &apos;文件保存在: ./picture/&apos; . $_FILES[&apos;file&apos;] [&apos;tmp_name&apos;];</span><br><span class="line">             &#125; else &#123;</span><br><span class="line">                 echo &apos;文件上传失败&apos;;</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>在文件夹中的存储方式是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if ($_FILES[&quot;file&quot;][&quot;error&quot;] &gt; 0)</span><br><span class="line">&#123;</span><br><span class="line">    echo &quot;错误：&quot; . $_FILES[&quot;file&quot;][&quot;error&quot;] . &quot;&lt;br&gt;&quot;;</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    echo &quot;上传文件名: &quot; . $_FILES[&quot;file&quot;][&quot;name&quot;] . &quot;&lt;br&gt;&quot;;</span><br><span class="line">    echo &quot;文件类型: &quot; . $_FILES[&quot;file&quot;][&quot;type&quot;] . &quot;&lt;br&gt;&quot;;</span><br><span class="line">    echo &quot;文件大小: &quot; . ($_FILES[&quot;file&quot;][&quot;size&quot;] / 1024) . &quot; kB&lt;br&gt;&quot;;</span><br><span class="line">    echo &quot;文件临时存储的位置: &quot; . $_FILES[&quot;file&quot;][&quot;tmp_name&quot;];</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+</div></header></article><div class="comments" id="lv-container" data-id="city" data-uid="your uid"><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2016-2018 xiaoli24680</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>

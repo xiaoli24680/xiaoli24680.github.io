@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="xiaoli24680"><meta name="keywords" content="safe"><link rel="alternative" href="/atom.xml" title="xiaoli24680's Blog" type="application/atom+xml"><link rel="icon" href="/favicon.png"><title>TCP/IP协议与HTTP协议 - xiaoli24680's Blog</title><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css"><!--[if lt IE 9]><script>(function(a,b){a="abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video".split(" ");for(b=a.length-1;b>=0;b--)document.createElement(a[b])})()</script><![endif]--><script src="/js/jquery-3.1.1.min.js"></script><script src="/js/fancybox/jquery.fancybox.min.js"></script></head><body style="opacity:0"><header class="head"><h1 class="head-title u-fl"><a href="/">xiaoli24680's Blog</a></h1><nav class="head-nav u-fr"><ul class="head-nav__list"><li class="head-nav__item"><a class="head-nav__link" href="/archives">目录</a></li></ul></nav></header><main class="main"><article class="post"><header class="post__head"> <time class="post__time" datetime="2018-12-25T13:34:31.000Z">December 25, 2018</time><h1 class="post__title"><a href="/2018/12/25/TCPIP协议与HTTP协议/">TCP/IP协议与HTTP协议</a></h1><div class="post__main echo"><h1 id="TCP-IP协议与HTTP协议"><a href="#TCP-IP协议与HTTP协议" class="headerlink" title="TCP/IP协议与HTTP协议"></a>TCP/IP协议与HTTP协议</h1><h2 id="一、TCP-IP协议"><a href="#一、TCP-IP协议" class="headerlink" title="一、TCP/IP协议"></a>一、TCP/IP协议</h2><p>TCP/IP协议，也称TCP/IP协议族或TCP/IP协议栈，其中：</p>
+<p>TCP：Transmission Control Protocol 传输控制协议<br>IP： Internet Protocol 互联网协议</p>
+<p>该协议是目前世界上应用最为广泛的协议，是以TCP和IP为基础的不同层次上多个协议的集合，两台主机要实现通讯，都必须遵守TCP/IP协议。</p>
+<p>以下是ISO/OSI七层模型与TCP/IP四层模型对比：</p>
+<p><img src="/http协议/图片1.png" alt="TCP"></p>
+<p>区别：</p>
+<p>1、前者是七层模型结构，后者是四层模型结构；</p>
+<p>2、实际市场应用不同， ISO/OSI参考模型只是理论上的模型，并没有成熟的产品支持；而TCP/IP参考模型已经成为“实际上的国际标准”。</p>
+<p>五层协议与四层协议基本相同，只不过是将网络接口层分开为物理层和数据链路层。</p>
+<h2 id="二、TCP三次握手和四次挥手"><a href="#二、TCP三次握手和四次挥手" class="headerlink" title="二、TCP三次握手和四次挥手"></a>二、TCP三次握手和四次挥手</h2><h3 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h3><p>首先看一张图片</p>
+<p><img src="/http协议/图片2.gif" alt="tcp"></p>
+<p>在学习TCP协议的“三次握手”之前，先来了解TCP报文及格式：当应用层向TCP层发送用于网间传输的、用8位字节表示的数据流时，TCP会把数据流分割成适当长度的报文段，之后TCP把数据包传给IP层，由它来通过网络将包传送给接收端实体的TCP层。</p>
+<h4 id="三次握手流程"><a href="#三次握手流程" class="headerlink" title="三次握手流程"></a>三次握手流程</h4><p>1.第一次握手：主机A将标志位SYN置为1，随机产生一个值seq=J，并将该数据包发送给主机B，主机A进入SYN_SENT状态，等待主机B确认。</p>
+<ol start="2">
+<li>第二次握手：主机B收到数据包后由标志位SYN=1得知主机A请求建立连接，主机B将标志位SYN和ACK都置为1，ack=J+1，随机产生一个值seq=K，并将该数据包发送给主机A以确认连接请求，主机B进入SYN_RCVD状态。</li>
+</ol>
+<p>3.第三次握手：主机A收到确认后，检查ack是否为J+1，ACK是否为1，如果正确则将标志位ACK置为1，ack=K+1，并将该数据包发送给主机B，主机B检查ack是否为K+1，ACK是否为1，如果正确则连接建立成功，主机A和主机B进入ESTABLISHED状态，完成三次握手，随后就可以开始传输数据了</p>
+<h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3><p><img src="/http协议/图片3.gif" alt="tcp"></p>
+<p>在了解4次挥手之前我们要知道为什么建立连接时是3次，而关闭时却是4次呢？</p>
+<p>这是因为服务端的LISTEN状态下的SOCKET当收到SYN报文的连接请求后，它可以把ACK和SYN(ACK起应答作用，而SYN起同步作用)放在 一个报文里来发送。但关闭连接时，当收到对方的FIN报文通知时，它仅仅表示对方没有数据发送给你了；但未必你所有的数据都全部发送给对方了，所以你可能 未必会马上会关闭SOCKET,也即你可能还需要发送一些数据给对方之后，再发送FIN报文给对方来表示你同意现在可以关闭连接了，所以它这里的ACK报 文和FIN报文多数情况下都是分开发送的。 </p>
+<p>（1）第一次挥手：客户端发送一个FIN，用来关闭客户端到服务器的数据传送，客户端进入FIN 1状态。         </p>
+<p>（2）第二次挥手：服务器收到FIN后，发送一个ACK给客户端，确认序号为收到序号+1（与SYN相同，一个FIN占用一个序号），客户端进入CLOSE_WAIT状态。         </p>
+<p>（3）第三次挥手：服务器发送一个FIN，用来关闭服务器到客户端的数据传送，服务器进入LAST_ACK状态。         </p>
+<p>（4）第四次挥手：客户端收到FIN后，进入TIME_WAIT状态，接着发送一个ACK给服务器，确认序号为收到序号+1，进入CLOSED状态，完成四次挥手。 </p>
+<h3 id="常用端口"><a href="#常用端口" class="headerlink" title="常用端口"></a>常用端口</h3><p><strong>21 FTP</strong></p>
+<p><strong>22 SSH</strong></p>
+<p><strong>23 Telnet</strong></p>
+<p><strong>25 SMTP</strong></p>
+<p><strong>80 http</strong></p>
+<p><strong>110 pop3</strong></p>
+<p><strong>135 smb</strong></p>
+<p><strong>443 https</strong></p>
+<p><strong>445 共享服务</strong></p>
+<p><strong>1433 sql server</strong></p>
+<p><strong>1531 oracle</strong></p>
+<p><strong>3306 mysql</strong></p>
+<p><strong>3389 rdp远程桌面</strong></p>
+<p><strong>5432 postgresql</strong></p>
+<p><strong>6379 redis</strong></p>
+<p><strong>7001weblogic</strong></p>
+<p><strong>8080 tomcat</strong></p>
+<p><strong>10051 zabbix</strong></p>
+<p><strong>27017 mongodb</strong></p>
+<h2 id="二、HTTP协议"><a href="#二、HTTP协议" class="headerlink" title="二、HTTP协议"></a>二、HTTP协议</h2><p>HTTP协议作用在应用层，属于应用层协议。</p>
+<h3 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h3><ul>
+<li><p>200 - 请求成功</p>
+</li>
+<li><p>301 - 资源（网页等）被永久转移到其它URL</p>
+</li>
+<li><p>404 - 请求的资源（网页等）不存在</p>
+</li>
+<li><p>500 - 内部服务器错误</p>
+<p>| 200  | OK                    | 请求成功。一般用于GET与POST请求                              |<br>| —- | ——————— | ———————————————————— |<br>| 400  | Bad Request           | 客户端请求的语法错误，服务器无法理解                         |<br>| 403  | Forbidden             | 服务器理解请求客户端的请求，但是拒绝执行此请求               |<br>| 404  | Not Found             | 服务器无法根据客户端的请求找到资源（网页）。通过此代码，网站设计人员可设置”您所请求的资源无法找到”的个性页面 |<br>| 405  | Method Not Allowed    | 客户端请求中的方法被禁止                                     |<br>| 500  | Internal Server Error | 服务器内部错误，无法完成请求                                 |<br>| 502  | Bad Gateway           | 作为网关或者代理工作的服务器尝试执行请求时，从远程服务器接收到了一个无效的响应 |</p>
+</li>
+</ul>
+<h3 id="HTTP之URL"><a href="#HTTP之URL" class="headerlink" title="HTTP之URL"></a>HTTP之URL</h3><p><img src="/http协议/图片4.png" alt="http"></p>
+<h3 id="HTTP之请求消息Request"><a href="#HTTP之请求消息Request" class="headerlink" title="HTTP之请求消息Request"></a>HTTP之请求消息Request</h3><p><img src="/http协议/图片5.png" alt="http"></p>
+<p>举例：</p>
+<p>GET / HTTP/1.1</p>
+<p>Host: 192.168.11.111:8000</p>
+<p>Accept: <em>/</em></p>
+<p>//换行</p>
+<h3 id="HTTP请求方法"><a href="#HTTP请求方法" class="headerlink" title="HTTP请求方法"></a>HTTP请求方法</h3><p>主要是GET和POST请求</p>
+<h5 id="GET请求举例"><a href="#GET请求举例" class="headerlink" title="GET请求举例"></a>GET请求举例</h5><p><img src="/http协议/图片6.png" alt="http"></p>
+<h5 id="POST请求举例"><a href="#POST请求举例" class="headerlink" title="POST请求举例"></a>POST请求举例</h5><p><img src="/http协议/图片7.png" alt="http"></p>
+<h3 id="HTTP请求头和响应头"><a href="#HTTP请求头和响应头" class="headerlink" title="HTTP请求头和响应头"></a>HTTP请求头和响应头</h3><p>请求头：</p>
+<p>User-Agent ；浏览器的标识信息</p>
+<p>Accept 发送的数据类型（一般有text，json,xml）</p>
+<p>Accept-Language  浏览器使用的语言</p>
+<p>Accept-Encoding 指浏览器向中间件发送数据是使用的压缩方式</p>
+<p>Host 访问的网站域名+端口</p>
+<p>Cookie 网站认证信息</p>
+<p>响应头：</p>
+<p>Date 日期时间 这个时间为GTM时间，和我们的utc时间差8个小时</p>
+<p>Set-Cookie cookie的来源（给网站设置Cookie）</p>
+<p>Content-Type 告诉浏览器返回的内容格式</p>
+<p>Serve 显示中间件的版本信息</p>
+<p>X-Forwarded-By 使用的脚本语言</p>
+</div></header></article><div class="comments" id="lv-container" data-id="city" data-uid="your uid"><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2016-2018 xiaoli24680</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>

